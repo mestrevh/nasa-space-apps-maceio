@@ -268,11 +268,11 @@ def get_article_group(node):
     if "paper_id" in node:
         paper_id = node["paper_id"]
         if "10.3390/cells10030560" in paper_id:
-            return "article1"
+            return "Células-Tronco Adiposas"
         elif "10.1371/journal.pone.0183480" in paper_id:
-            return "article2"
+            return "Isolamento de RNA na ISS"
         else:
-            return "unknown"
+            return "Artigo Desconhecido"
     
     # For other nodes, we need to check their relationships to papers
     # This is a simplified approach - in a real scenario, you'd query the relationships
@@ -287,19 +287,24 @@ def get_article_group(node):
         article2_keywords = ["rna", "isolation", "pcr", "quantitative", "real", "time", "iss", "space", "station"]
         
         if any(keyword in name for keyword in article1_keywords):
-            return "article1"
+            return "Células-Tronco Adiposas"
         elif any(keyword in name for keyword in article2_keywords):
-            return "article2"
+            return "Isolamento de RNA na ISS"
     
     # Default to shared/unknown for nodes that could belong to both articles
-    return "shared"
+    return "Conceitos Compartilhados"
 
 
 # --- WEB APPLICATION ROUTES (Endpoints) ---
 
 @app.route('/')
+def landing_page():
+    """Serves the landing page."""
+    return render_template('landing.html')
+
+@app.route('/graph')
 def main_page():
-    """Serves the main HTML page."""
+    """Serves the main graph visualization page."""
     return render_template('index.html')
 
 @app.route('/systematic-review')
