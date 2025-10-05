@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão Sistemática - Biologia Celular em Microgravidade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .study-card {
+            background: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .study-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+
+        .study-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .study-id {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .study-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .study-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #3498db;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .section-content {
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .key-findings {
+            list-style: none;
+        }
+
+        .key-findings li {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .key-findings li::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            left: -12px;
+            top: 15px;
+            background: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+
+        .citation {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #7f8c8d;
+            border-left: 4px solid #95a5a6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .study-content {
+                padding: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="graph.html" class="back-button">← Voltar ao Grafo</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Revisão Sistemática</h1>
+            <p class="subtitle">Biologia Celular em Microgravidade</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Estudos Analisados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2021-2025</div>
+                <div class="stat-label">Período de Publicação</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">ISS</div>
+                <div class="stat-label">Ambiente de Pesquisa</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Multi</div>
+                <div class="stat-label">Tipos Celulares</div>
+            </div>
+        </div>
+
+        <div id="studies-container">
+            <!-- Os estudos serão carregados aqui via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Dados da revisão sistemática
+        const systematicReviewData = [
+            {
+                "id": 1,
+                "study": "Mashiko, T. et al. (2021)",
+                "objective": "Desenvolver e validar um novo método de cultura em microgravidade para proliferar seletivamente células-tronco adiposas (hASCs) altamente funcionais.",
+                "methodology": "Cultura de células em microesferas de poliestireno e colágeno com agitação controlada para simular microgravidade. Análise de expressão gênica por RT-qPCR e ensaios funcionais (formação de colônias, diferenciação, etc.).",
+                "organism_cell_type": "Células-Tronco Derivadas de Adiposo Humano (hASCs).",
+                "key_findings": [
+                    "A cultura em microgravidade aumentou a proporção de células-tronco SSEA-3(+) em 4.4 vezes e seu número em 2.7 vezes em comparação com culturas normais.",
+                    "As células cultivadas sob microgravidade expressaram níveis mais altos de marcadores de pluripotência (OCT4, SOX2, NANOG).",
+                    "As células demonstraram capacidades melhoradas de proliferação, formação de redes e diferenciação mesenquimal múltipla."
+                ],
+                "source_citation": "Mashiko, T.; Kanayama, K.; Saito, N.; Shirado, T.; Asahi, R.; Mori, M.; Yoshimura, K. Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres. Cells 2021, 10, 560."
+            },
+            {
+                "id": 2,
+                "study": "López Garzón, N.A. et al. (2025)",
+                "objective": "Realizar uma revisão abrangente dos efeitos da microgravidade em processos biológicos e suas implicações para a saúde humana, abordando o sistema imune, câncer, regeneração tecidual e sistemas de órgãos.",
+                "methodology": "Revisão sistemática da literatura utilizando as bases de dados PubMed, Scopus e Embase. A análise incluiu estudos observacionais, in vitro e experimentais.",
+                "organism_cell_type": "Vários, incluindo: Células do sistema imune (Linfócitos T, macrófagos), células-tronco, células cancerígenas, células endoteliais, ósseas, renais e cardiomiócitos.",
+                "key_findings": [
+                    "A microgravidade afeta o sistema imune, prejudicando a ativação de linfócitos T e a produção de citocinas.",
+                    "Em biologia do câncer, promove a formação de esferoides que mimetizam tumores in vivo.",
+                    "Em cardiomiócitos, melhora a maturação, a biogênese mitocondrial e o manuseio de cálcio.",
+                    "Induz perda óssea acelerada, altera o metabolismo hepático e a função endotelial."
+                ],
+                "source_citation": "López Garzón, N.A.; Pinzón-Fernández, M.V.; Saavedra T., JS; Nati-Castillo, H.A.; Arias-Intriago, M.; Salazar-Santoliva, C.; Izquierdo-Condoy, J.S. Microgravity and Cellular Biology: Insights into Cellular Responses and Implications for Human Health. Int. J. Mol. Sci. 2025, 26, 3058."
+            },
+            {
+                "id": 3,
+                "study": "Parra, M. et al. (2017)",
+                "objective": "Validar em microgravidade um novo sistema, chamado WetLab-2, para isolamento de RNA e análise de expressão gênica por RT-qPCR multiplex a bordo da Estação Espacial Internacional (ISS).",
+                "methodology": "Realização de experimentos a bordo da ISS utilizando o sistema WetLab-2, que inclui um Módulo de Preparação de Amostras de RNA (SPM) e um termociclador de PCR em tempo real. A validação foi feita com padrões de DNA e RNA extraído de amostras congeladas de E. coli e tecido hepático de camundongo.",
+                "organism_cell_type": "Escherichia coli (bactéria) e Camundongo (Mus musculus) (tecido do fígado).",
+                "key_findings": [
+                    "O sistema WetLab-2 realizou com sucesso a extração de RNA e a análise por RT-qPCR no ambiente de microgravidade da ISS, com resultados comparáveis aos controles em terra.",
+                    "Foi identificado um problema técnico de formação de bolhas de gás durante os ciclos térmicos, que interfere na detecção de fluorescência.",
+                    "O problema das bolhas foi mitigado com sucesso em um experimento de acompanhamento em órbita, usando tampas padrão para pressurizar os tubos de PCR.",
+                    "O sistema foi validado e agora representa uma nova capacidade operacional para pesquisa em biologia molecular na ISS."
+                ],
+                "source_citation": "Parra M, Jung J, Boone TD, Tran L, Blaber EA, Brown M, et al. (2017) Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station. PLOS ONE 12(9): e0183480."
+            }
+        ];
+
+        // Função para renderizar os estudos
+        function renderStudies() {
+            const container = document.getElementById('studies-container');
+            
+            systematicReviewData.forEach(study => {
+                const studyCard = document.createElement('div');
+                studyCard.className = 'study-card';
+                
+                studyCard.innerHTML = `
+                    <div class="study-header">
+                        <div class="study-id">Estudo ${study.id}</div>
+                        <div class="study-title">${study.study}</div>
+                    </div>
+                    <div class="study-content">
+                        <div class="section">
+                            <div class="section-title">Objetivo</div>
+                            <div class="section-content">${study.objective}</div>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Metodologia</div>
+                            <div class="section-content">${study.methodology}</div>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Organismo/Tipo Celular</div>
+                            <div class="section-content">${study.organism_cell_type}</div>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Principais Achados</div>
+                            <ul class="key-findings">
+                                ${study.key_findings.map(finding => `<li>${finding}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-title">Citação</div>
+                            <div class="citation">${study.source_citation}</div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(studyCard);
+            });
+        }
+
+        // Carregar os estudos quando a página for carregada
+        document.addEventListener('DOMContentLoaded', renderStudies);
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data SpaceBio - O futuro da biologia espacial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: #000;
+        }
+
+        .landing-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .landing-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .clickable-button {
+            position: absolute;
+            /* Posicionamento ajustado para alinhar com o botão da imagem */
+            left: 5%;
+            top: 65%;
+            width: 25%;
+            height: 6%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .clickable-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsividade para diferentes tamanhos de tela */
+        @media (max-width: 768px) {
+            .clickable-button {
+                left: -5%;
+                top: 60%;
+                width: 10%;
+                height: 8%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .clickable-button {
+                left: 2%;
+                top: 55%;
+                width: 35%;
+                height: 10%;
+            }
+        }
+
+        /* Efeito de loading opcional */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #333;
+            border-top: 3px solid #4A90E2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <img src="static/landingpage.png" 
+             alt="Data SpaceBio - O projeto que dita o futuro da biologia espacial" 
+             class="landing-image">
+        
+        <!-- Botão invisível clicável sobre a região do botão "comece a explorar" -->
+        <button class="clickable-button" onclick="redirectToGraph()" 
+                title="Clique para começar a explorar o Data SpaceBio">
+        </button>
+    </div>
+
+    <!-- Overlay de loading -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Carregando Data SpaceBio...</div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToGraph() {
+            // Mostrar loading
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            // Redirecionar após um pequeno delay para mostrar o loading
+            setTimeout(() => {
+                window.location.href = 'graph.html';
+            }, 500);
+        }
+
+        // Adicionar suporte para teclado (acessibilidade)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                redirectToGraph();
+            }
+        });
+    </script>
+</body>
+</html>

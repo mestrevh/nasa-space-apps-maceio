@@ -1,0 +1,510 @@
+{
+  "nodes": [
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "label": "Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres",
+      "fullLabel": "Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres",
+      "group": "Células-Tronco Adiposas",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "label": "Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station",
+      "fullLabel": "Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station",
+      "group": "Isolamento de RNA na ISS",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:2",
+      "label": "Mashiko, T.",
+      "fullLabel": "Mashiko, T.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:3",
+      "label": "Kanayama, K.",
+      "fullLabel": "Kanayama, K.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:4",
+      "label": "Saito, N.",
+      "fullLabel": "Saito, N.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:5",
+      "label": "Shirado, T.",
+      "fullLabel": "Shirado, T.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:6",
+      "label": "Asahi, R.",
+      "fullLabel": "Asahi, R.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:7",
+      "label": "Mori, M.",
+      "fullLabel": "Mori, M.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:8",
+      "label": "Yoshimura, K.",
+      "fullLabel": "Yoshimura, K.",
+      "group": "Author",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:9",
+      "label": "Parra, M.",
+      "fullLabel": "Parra, M.",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:10",
+      "label": "Jung, J.",
+      "fullLabel": "Jung, J.",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:11",
+      "label": "Boone, TD",
+      "fullLabel": "Boone, TD",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:12",
+      "label": "Tran, L.",
+      "fullLabel": "Tran, L.",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:13",
+      "label": "Blaber, EA",
+      "fullLabel": "Blaber, EA",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:14",
+      "label": "Brown, M.",
+      "fullLabel": "Brown, M.",
+      "group": "Author",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:15",
+      "label": "University of Tokyo",
+      "fullLabel": "University of Tokyo",
+      "group": "Institution",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:16",
+      "label": "NASA Ames Research Center",
+      "fullLabel": "NASA Ames Research Center",
+      "group": "Institution",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:17",
+      "label": "microgravity",
+      "fullLabel": "microgravity",
+      "group": "Keyword",
+      "articleGroup": "Conceitos Compartilhados"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:18",
+      "label": "stem cells",
+      "fullLabel": "stem cells",
+      "group": "Keyword",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:19",
+      "label": "adipose-derived",
+      "fullLabel": "adipose-derived",
+      "group": "Keyword",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:20",
+      "label": "proliferation",
+      "fullLabel": "proliferation",
+      "group": "Keyword",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:21",
+      "label": "RNA isolation",
+      "fullLabel": "RNA isolation",
+      "group": "Keyword",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:22",
+      "label": "qPCR",
+      "fullLabel": "qPCR",
+      "group": "Keyword",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:23",
+      "label": "International Space Station",
+      "fullLabel": "International Space Station",
+      "group": "Keyword",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "label": "hASCs",
+      "fullLabel": "Human Adipose-Derived Stem Cells",
+      "group": "CellType",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:25",
+      "label": "E. coli",
+      "fullLabel": "Escherichia coli",
+      "group": "CellType",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:26",
+      "label": "Mouse liver tissue",
+      "fullLabel": "Mouse liver tissue",
+      "group": "CellType",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:27",
+      "label": "OCT4",
+      "fullLabel": "OCT4",
+      "group": "Gene",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:28",
+      "label": "SOX2",
+      "fullLabel": "SOX2",
+      "group": "Gene",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:29",
+      "label": "NANOG",
+      "fullLabel": "NANOG",
+      "group": "Gene",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:30",
+      "label": "SSEA-3",
+      "fullLabel": "SSEA-3",
+      "group": "Gene",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:31",
+      "label": "RT-qPCR",
+      "fullLabel": "Reverse Transcription Quantitative Polymerase Chain Reaction",
+      "group": "Method",
+      "articleGroup": "Conceitos Compartilhados"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:32",
+      "label": "WetLab-2",
+      "fullLabel": "WetLab-2 System",
+      "group": "Method",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:33",
+      "label": "colony formation assay",
+      "fullLabel": "colony formation assay",
+      "group": "Method",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:34",
+      "label": "differentiation assay",
+      "fullLabel": "differentiation assay",
+      "group": "Method",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:35",
+      "label": "polystyrene microspheres",
+      "fullLabel": "polystyrene microspheres",
+      "group": "Material",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:36",
+      "label": "collagen",
+      "fullLabel": "collagen",
+      "group": "Material",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:37",
+      "label": "RNA extraction kit",
+      "fullLabel": "RNA extraction kit",
+      "group": "Material",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:38",
+      "label": "PCR tubes",
+      "fullLabel": "PCR tubes",
+      "group": "Material",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:39",
+      "label": "Japan Society for the Promotion of Science",
+      "fullLabel": "Japan Society for the Promotion of Science",
+      "group": "Funder",
+      "articleGroup": "Células-Tronco Adiposas"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:40",
+      "label": "NASA",
+      "fullLabel": "National Aeronautics and Space Administration",
+      "group": "Funder",
+      "articleGroup": "Isolamento de RNA na ISS"
+    },
+    {
+      "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:41",
+      "label": "ISS Mission",
+      "fullLabel": "International Space Station Mission",
+      "group": "Mission",
+      "articleGroup": "Isolamento de RNA na ISS"
+    }
+  ],
+  "edges": [
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:2",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:3",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:4",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:5",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:6",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:7",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:8",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:9",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:10",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:11",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:12",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:13",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:14",
+      "label": "AUTHORED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:2",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:15",
+      "label": "AFFILIATED_WITH"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:9",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:16",
+      "label": "AFFILIATED_WITH"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:17",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:18",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:19",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:20",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:17",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:21",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:22",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:23",
+      "label": "HAS_KEYWORD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "label": "STUDIES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:25",
+      "label": "STUDIES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:26",
+      "label": "STUDIES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:27",
+      "label": "EXPRESSES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:28",
+      "label": "EXPRESSES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:29",
+      "label": "EXPRESSES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:24",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:30",
+      "label": "EXPRESSES"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:31",
+      "label": "USES_METHOD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:31",
+      "label": "USES_METHOD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:32",
+      "label": "USES_METHOD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:33",
+      "label": "USES_METHOD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:34",
+      "label": "USES_METHOD"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:35",
+      "label": "USES_MATERIAL"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:36",
+      "label": "USES_MATERIAL"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:37",
+      "label": "USES_MATERIAL"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:38",
+      "label": "USES_MATERIAL"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:39",
+      "label": "FUNDED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:40",
+      "label": "FUNDED_BY"
+    },
+    {
+      "from": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
+      "to": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:41",
+      "label": "CONDUCTED_IN"
+    }
+  ]
+}
