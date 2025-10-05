@@ -26,6 +26,38 @@ URI = "bolt://localhost:7687"
 AUTH = ("neo4j", "12345678")  # Remember to use your password
 driver = GraphDatabase.driver(URI, auth=AUTH)
 
+# Clear database on startup
+def clear_database():
+    """Clear all data from Neo4j database"""
+    try:
+        with driver.session(database="neo4j") as session:
+            session.run("MATCH (n) DETACH DELETE n")
+            print("Database cleared successfully!")
+    except Exception as e:
+        print(f"Error clearing database: {e}")
+
+# Clear database when app starts
+clear_database()
+
+# Load sample data after clearing
+def load_sample_data():
+    """Load the sample data from both articles"""
+    try:
+        # Import and run the sample data loader
+        import subprocess
+        import sys
+        result = subprocess.run([sys.executable, "load_sample_data.py"], 
+                              capture_output=True, text=True)
+        if result.returncode == 0:
+            print("Sample data loaded successfully!")
+        else:
+            print(f"Error loading sample data: {result.stderr}")
+    except Exception as e:
+        print(f"Error loading sample data: {e}")
+
+# Load sample data after clearing
+load_sample_data()
+
 
 # --- PROCESSING FUNCTIONS (Original script logic) ---
 
@@ -98,14 +130,52 @@ def fetch_graph_data():
 
             if node_n.element_id not in node_ids:
                 node_ids.add(node_n.element_id)
-                nodes.append({"id": node_n.element_id, "label": node_n.get("name", "Unnamed"), "group": list(node_n.labels)[0]})
+                label = get_node_label(node_n)
+                nodes.append({"id": node_n.element_id, "label": label, "group": list(node_n.labels)[0]})
 
             if node_m.element_id not in node_ids:
                 node_ids.add(node_m.element_id)
-                nodes.append({"id": node_m.element_id, "label": node_m.get("name", "Unnamed"), "group": list(node_m.labels)[0]})
+                label = get_node_label(node_m)
+                nodes.append({"id": node_m.element_id, "label": label, "group": list(node_m.labels)[0]})
 
             edges.append({"from": rel.start_node.element_id, "to": rel.end_node.element_id, "label": type(rel).__name__})
     return {"nodes": nodes, "edges": edges}
+
+def get_node_label(node):
+    """Get the appropriate label for a node based on its properties."""
+    # Try different possible label fields based on node type
+    if "title" in node:
+        return node["title"]
+    elif "name" in node:
+        return node["name"]
+    elif "term" in node:
+        return node["term"]
+    elif "paper_id" in node:
+        return node["paper_id"]
+    elif "author_id" in node:
+        return node["author_id"]
+    elif "institution_id" in node:
+        return node["institution_id"]
+    elif "keyword_id" in node:
+        return node["keyword_id"]
+    elif "cell_type_id" in node:
+        return node["cell_type_id"]
+    elif "gene_id" in node:
+        return node["gene_id"]
+    elif "method_id" in node:
+        return node["method_id"]
+    elif "material_id" in node:
+        return node["material_id"]
+    elif "funder_id" in node:
+        return node["funder_id"]
+    elif "mission_id" in node:
+        return node["mission_id"]
+    else:
+        # Fallback: use the first available property
+        properties = dict(node)
+        if properties:
+            return str(list(properties.values())[0])
+        return "Unnamed"
 
 
 # --- WEB APPLICATION ROUTES (Endpoints) ---
@@ -127,16 +197,22 @@ def get_node_list():
     """API endpoint that returns a simplified list of all nodes."""
     nodes = []
     with driver.session(database="neo4j") as session:
-        # This query fetches the name, internal element ID, and the first label of each node
-        # We order by name to keep the list alphabetized
+        # This query fetches all nodes with their properties
         query = """
         MATCH (n) 
-        RETURN n.name AS name, elementId(n) AS id, labels(n)[0] AS group
-        ORDER BY name
+        RETURN n, elementId(n) AS id, labels(n)[0] AS group
+        ORDER BY id(n)
         """
         result = session.run(query)
         # Convert the result into a list of dictionaries
-        nodes = [record.data() for record in result]
+        for record in result:
+            node = record["n"]
+            label = get_node_label(node)
+            nodes.append({
+                "name": label,
+                "id": record["id"],
+                "group": record["group"]
+            })
     return jsonify(nodes)
 
 

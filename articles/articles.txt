@@ -1,0 +1,274 @@
+# --- ESTRUTURA DE DADOS PARA NEO4J - EXTRAÍDA DO ARTIGO CIENTÍFICO ---
+
+# 1. NÓS (ENTIDADES)
+
+# Nó principal representando o artigo
+papers = [
+    {
+        "paper_id": "10.3390/cells10030560",
+        [cite_start]"title": "Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres [cite: 3]",
+        [cite_start]"journal": "Cells [cite: 1]",
+        [cite_start]"publication_date": "2021-03-04 [cite: 10]",
+        [cite_start]"doi": "10.3390/cells10030560 [cite: 8]"
+    }
+]
+
+# Nós para cada autor
+authors = [
+    [cite_start]{"author_id": "Takanobu Mashiko", "name": "Takanobu Mashiko [cite: 4]"},
+    [cite_start]{"author_id": "Koji Kanayama", "name": "Koji Kanayama [cite: 4]"},
+    [cite_start]{"author_id": "Natsumi Saito", "name": "Natsumi Saito [cite: 4]"},
+    [cite_start]{"author_id": "Takako Shirado", "name": "Takako Shirado [cite: 4]"},
+    [cite_start]{"author_id": "Rintaro Asahi", "name": "Rintaro Asahi [cite: 4]"},
+    [cite_start]{"author_id": "Masanori Mori", "name": "Masanori Mori [cite: 4]"},
+    [cite_start]{"author_id": "Kotaro Yoshimura", "name": "Kotaro Yoshimura [cite: 4]", "is_corresponding": True}
+]
+
+# Nós para as instituições de afiliação
+institutions = [
+    [cite_start]{"institution_id": "Jichi Medical University", "name": "Jichi Medical University [cite: 17]"},
+    [cite_start]{"institution_id": "Toranomon Hospital", "name": "Toranomon Hospital [cite: 19]"}
+]
+
+# Nós para as palavras-chave do artigo
+keywords = [
+    [cite_start]{"keyword_id": "adipose-derived stem cell", "term": "adipose-derived stem cell [cite: 27]"},
+    [cite_start]{"keyword_id": "microgravity culture", "term": "microgravity culture [cite: 27]"},
+    [cite_start]{"keyword_id": "polystyrene microsphere", "term": "polystyrene microsphere [cite: 27]"},
+    [cite_start]{"keyword_id": "collagen microsphere", "term": "collagen microsphere [cite: 27]"},
+    [cite_start]{"keyword_id": "multilineage-differentiating stress-enduring cell", "term": "multilineage-differentiating stress-enduring cell [cite: 27]"}
+]
+
+# Nós para os tipos de células estudados ou mencionados
+cell_types = [
+    [cite_start]{"cell_type_id": "hASC", "name": "Human Adipose-Derived Stem Cells (hASCs) [cite: 29]"},
+    [cite_start]{"cell_type_id": "Muse Cell", "name": "Multilineage-Differentiating Stress-Enduring (Muse) Cell [cite: 43]"},
+    [cite_start]{"cell_type_id": "Embryonic Stem Cell", "name": "Embryonic Stem Cells [cite: 33]"}
+]
+
+# Nós para os marcadores/genes analisados
+genes = [
+    [cite_start]{"gene_id": "SSEA-3", "name": "Stage-Specific Embryonic Antigen-3 (SSEA-3) [cite: 43]"},
+    [cite_start]{"gene_id": "OCT4", "name": "Octamer-Binding Transcription Factor 4 (OCT4) [cite: 132]"},
+    [cite_start]{"gene_id": "SOX2", "name": "(Sex Determining Region Y)-Box 2 (SOX2) [cite: 132]"},
+    [cite_start]{"gene_id": "NANOG", "name": "NANOG [cite: 25]"},
+    [cite_start]{"gene_id": "MYC", "name": "MYC [cite: 25]"},
+    [cite_start]{"gene_id": "KLF4", "name": "Kruppel-Like Factor 4 (KLF4) [cite: 132]"},
+    [cite_start]{"gene_id": "CD34", "name": "CD34 [cite: 45]"},
+    [cite_start]{"gene_id": "ACTB", "name": "B-actin (ACTB) [cite: 132]"}
+]
+
+# Nós para os métodos e técnicas utilizados
+methods = [
+    [cite_start]{"method_id": "Microgravity Culture", "name": "Microgravity Culture with Stirred Microspheres [cite: 3]"},
+    [cite_start]{"method_id": "Flow Cytometry", "name": "Flow Cytometry [cite: 66]"},
+    [cite_start]{"method_id": "RT-PCR", "name": "Quantitative Real-Time Polymerase Chain Reaction (RT-PCR) [cite: 123]"},
+    [cite_start]{"method_id": "Immunocytochemistry", "name": "Immunocytochemistry [cite: 116]"},
+    [cite_start]{"method_id": "Colony-Forming Assay", "name": "Colony-Forming Assay [cite: 133]"},
+    [cite_start]{"method_id": "Angiogenesis Assay", "name": "In Vitro Angiogenesis (Network Formation) Assay [cite: 136]"},
+    [cite_start]{"method_id": "Multilineage Differentiation Assay", "name": "Multilineage Differentiation Assay [cite: 141]"}
+]
+
+# Nós para os materiais específicos empregados
+materials = [
+    [cite_start]{"material_id": "Polystyrene Microspheres", "name": "Polystyrene Microspheres [cite: 79]"},
+    [cite_start]{"material_id": "Collagen Microspheres", "name": "Collagen Microspheres [cite: 82]"}
+]
+
+# Nós para as fontes de financiamento
+funders = [
+    [cite_start]{"funder_id": "MHLW Japan", "name": "Ministry of Health, Labour and Welfare of Japan [cite: 573]"},
+    [cite_start]{"funder_id": "Cell Source Inc", "name": "Cell Source, Inc. [cite: 573]"}
+]
+
+
+# 2. RELACIONAMENTOS (CONEXÕES)
+
+# Relacionamentos do tipo (Autor) -[:WROTE]-> (Artigo)
+author_paper_rels = [
+    {"from": "Takanobu Mashiko", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Koji Kanayama", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Natsumi Saito", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Takako Shirado", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Rintaro Asahi", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Masanori Mori", "to": "10.3390/cells10030560", "relationship_type": "WROTE"},
+    {"from": "Kotaro Yoshimura", "to": "10.3390/cells10030560", "relationship_type": "WROTE"}
+]
+
+# Relacionamentos do tipo (Autor) -[:AFFILIATED_WITH]-> (Instituição)
+author_institution_rels = [
+    {"from": "Takanobu Mashiko", "to": "Jichi Medical University", "relationship_type": "AFFILIATED_WITH"},
+    {"from": "Takanobu Mashiko", "to": "Toranomon Hospital", "relationship_type": "AFFILIATED_WITH"},
+    {"from": "Koji Kanayama", "to": "Jichi Medical University", "relationship_type": "AFFILIATED_WITH"},
+    # ... (e assim por diante para todos os autores e suas afiliações)
+]
+
+# Relacionamentos do tipo (Artigo) -[:HAS_KEYWORD]-> (PalavraChave)
+paper_keyword_rels = [
+    {"from": "10.3390/cells10030560", "to": "adipose-derived stem cell", "relationship_type": "HAS_KEYWORD"},
+    {"from": "10.3390/cells10030560", "to": "microgravity culture", "relationship_type": "HAS_KEYWORD"},
+    {"from": "10.3390/cells10030560", "to": "polystyrene microsphere", "relationship_type": "HAS_KEYWORD"},
+    {"from": "10.3390/cells10030560", "to": "collagen microsphere", "relationship_type": "HAS_KEYWORD"},
+    {"from": "10.3390/cells10030560", "to": "multilineage-differentiating stress-enduring cell", "relationship_type": "HAS_KEYWORD"}
+]
+
+# Relacionamentos do tipo (Artigo) -[:STUDIES]-> (TipoDeCelula) e (Artigo) -[:USES]-> (Material/Método)
+paper_subject_rels = [
+    {"from": "10.3390/cells10030560", "to": "hASC", "relationship_type": "STUDIES_CELL_TYPE"},
+    {"from": "10.3390/cells10030560", "to": "Microgravity Culture", "relationship_type": "USES_METHOD"},
+    {"from": "10.3390/cells10030560", "to": "Polystyrene Microspheres", "relationship_type": "USES_MATERIAL"},
+    {"from": "10.3390/cells10030560", "to": "Collagen Microspheres", "relationship_type": "USES_MATERIAL"},
+    {"from": "10.3390/cells10030560", "to": "SSEA-3", "relationship_type": "ANALYZES_GENE_MARKER"},
+    # ... (e assim por diante para todos os métodos, materiais e genes)
+]
+
+# Relacionamentos do tipo (Financiador) -[:FUNDED]-> (Artigo)
+funder_paper_rels = [
+    {"from": "MHLW Japan", "to": "10.3390/cells10030560", "relationship_type": "FUNDED"},
+    {"from": "Cell Source Inc", "to": "10.3390/cells10030560", "relationship_type": "FUNDED"}
+]
+
+#segundo artigo
+
+# --- ESTRUTURA DE DADOS PARA NEO4J - EXTRAÍDA DO ARTIGO CIENTÍFICO ---
+
+# 1. NÓS (ENTIDADES)
+
+# Nó principal representando o artigo
+papers = [
+    {
+        "paper_id": "10.1371/journal.pone.0183480",
+        "title": "Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station",
+        "journal": "PLOS ONE",
+        "publication_date": "2017-09-06",
+        "doi": "10.1371/journal.pone.0183480"
+    }
+]
+
+# Nós para cada autor (lista extensa)
+authors = [
+    {"author_id": "Macarena Parra", "name": "Macarena Parra"},
+    {"author_id": "Jimmy Jung", "name": "Jimmy Jung"},
+    {"author_id": "Travis D. Boone", "name": "Travis D. Boone"},
+    {"author_id": "Luan Tran", "name": "Luan Tran"},
+    {"author_id": "Elizabeth A. Blaber", "name": "Elizabeth A. Blaber"},
+    {"author_id": "Kathleen Rubins", "name": "Kathleen Rubins", "role": "Astronaut"},
+    {"author_id": "Jeffrey Williams", "name": "Jeffrey Williams", "role": "Astronaut"},
+    {"author_id": "Eduardo A. C. Almeida", "name": "Eduardo A. C. Almeida", "is_corresponding": True}
+    # ... (e os demais 18 autores listados no artigo)
+]
+
+# Nós para as instituições de afiliação
+institutions = [
+    {"institution_id": "NASA Ames Research Center", "name": "NASA Ames Research Center"},
+    {"institution_id": "KBRWyle", "name": "KBRWyle"},
+    {"institution_id": "Millenium Engineering & Integration Co", "name": "Millenium Engineering & Integration Co"},
+    {"institution_id": "Universities Space Research Association", "name": "Universities Space Research Association"},
+    {"institution_id": "Claremont Biosolutions", "name": "Claremont Biosolutions"},
+    {"institution_id": "Stanford University", "name": "Stanford University"},
+    {"institution_id": "NASA Johnson Space Center", "name": "NASA Johnson Space Center"}
+]
+
+# Nós para o hardware e a tecnologia validada
+hardware_systems = [
+    {"hardware_id": "WetLab-2", "name": "WetLab-2 System", "description": "A suite of molecular biology tools for on-orbit gene expression analysis."},
+    {"hardware_id": "SPM", "name": "Sample Preparation Module (SPM)", "description": "An enclosed module for RNA isolation from biological samples in microgravity."},
+    {"hardware_id": "SmartCycler", "name": "Cepheid SmartCycler", "description": "A microgravity-compatible thermal cycler for qPCR."},
+    {"hardware_id": "Pipette Loader", "name": "Pipette Loader (PL)", "description": "A tool for bubble-free fluid transfer in microgravity."},
+    {"hardware_id": "STT", "name": "Sample Transfer Tool (STT)", "description": "Tools like ACT2 or Finger Loop syringes for sample handling."}
+]
+
+# Nós para os métodos validados
+methods = [
+    {"method_id": "On-Orbit RNA Isolation", "name": "On-Orbit RNA Isolation", "description": "Protocol to extract and purify RNA from samples aboard the ISS."},
+    {"method_id": "On-Orbit RT-qPCR", "name": "On-Orbit RT-qPCR", "description": "Real-time gene expression analysis performed in microgravity."},
+    {"method_id": "Lyophilized Assays", "name": "Lyophilized Reagents", "description": "Use of freeze-dried, room-temperature stable reagents to minimize cold storage needs."}
+]
+
+# Nós para os organismos utilizados nos experimentos
+organisms = [
+    {"organism_id": "E. coli", "name": "Escherichia coli", "type": "Prokaryote"},
+    {"organism_id": "Mouse", "name": "Mouse (Mus musculus)", "type": "Mammal"}
+]
+
+# Nós para os genes-alvo dos ensaios
+genes = [
+    {"gene_id": "dnaK", "name": "dnaK (Hsp70)", "organism": "E. coli"},
+    {"gene_id": "rpoA", "name": "rpoA", "organism": "E. coli"},
+    {"gene_id": "srlR", "name": "srlR", "organism": "E. coli"},
+    {"gene_id": "gapdh", "name": "gapdh", "organism": "Mouse"},
+    {"gene_id": "rpl19", "name": "rpl19", "organism": "Mouse"},
+    {"gene_id": "fn1", "name": "fn1", "organism": "Mouse"}
+]
+
+# Nó para a missão espacial
+missions = [
+    {"mission_id": "ISS_SPX-8", "name": "ISS Increment 47 / SpaceX CRS-8", "location": "International Space Station"}
+]
+
+# Nós para as fontes de financiamento e colaboradores
+funders_and_collaborators = [
+    {"entity_id": "NASA ISS Program", "name": "NASA International Space Station Program", "type": "Funder"},
+    {"entity_id": "CASIS", "name": "Center for the Advancement of Science in Space, Inc. (CASIS)", "type": "Collaborator"},
+    {"entity_id": "TechShot", "name": "TechShot", "type": "Commercial Collaborator"},
+    {"entity_id": "BioGX LLC", "name": "BioGX LLC", "type": "Commercial Collaborator"},
+    {"entity_id": "ClaremontBiosolutions", "name": "ClaremontBiosolutions", "type": "Commercial Collaborator"}
+]
+
+
+# 2. RELACIONAMENTOS (CONEXÕES)
+
+# Relacionamento (Artigo) -[:VALIDATES]-> (Hardware/Método)
+paper_validation_rels = [
+    {"from": "10.1371/journal.pone.0183480", "to": "WetLab-2", "relationship_type": "VALIDATES"},
+    {"from": "10.1371/journal.pone.0183480", "to": "On-Orbit RNA Isolation", "relationship_type": "VALIDATES"},
+    {"from": "10.1371/journal.pone.0183480", "to": "On-Orbit RT-qPCR", "relationship_type": "VALIDATES"}
+]
+
+# Relacionamento (Hardware) -[PART_OF]-> (Sistema Maior)
+hardware_component_rels = [
+    {"from": "SPM", "to": "WetLab-2", "relationship_type": "PART_OF"},
+    {"from": "SmartCycler", "to": "WetLab-2", "relationship_type": "PART_OF"},
+    {"from": "Pipette Loader", "to": "WetLab-2", "relationship_type": "PART_OF"}
+]
+
+# Relacionamento (Método) -[APPLIED_TO]-> (Organismo)
+method_organism_rels = [
+    {"from": "On-Orbit RNA Isolation", "to": "E. coli", "relationship_type": "APPLIED_TO"},
+    {"from": "On-Orbit RNA Isolation", "to": "Mouse", "relationship_type": "APPLIED_TO"}
+]
+
+# Relacionamento (Método) -[TARGETS_GENE]-> (Gene)
+method_gene_rels = [
+    {"from": "On-Orbit RT-qPCR", "to": "dnaK", "relationship_type": "TARGETS_GENE"},
+    {"from": "On-Orbit RT-qPCR", "to": "gapdh", "relationship_type": "TARGETS_GENE"},
+    # ... (e assim por diante para todos os genes)
+]
+
+# Relacionamento (Hardware) -[USED_IN]-> (Missão)
+hardware_mission_rels = [
+    {"from": "WetLab-2", "to": "ISS_SPX-8", "relationship_type": "USED_IN"}
+]
+
+# Relacionamento (Artigo) -[FUNDED_BY]-> (Financiador)
+paper_funder_rels = [
+    {"from": "10.1371/journal.pone.0183480", "to": "NASA ISS Program", "relationship_type": "FUNDED_BY"}
+]
+
+# Relacionamento (Hardware) -[DEVELOPED_WITH]-> (Colaborador)
+hardware_collaborator_rels = [
+    {"from": "WetLab-2", "to": "ClaremontBiosolutions", "relationship_type": "DEVELOPED_WITH", "contribution": "RNA isolation products"},
+    {"from": "WetLab-2", "to": "BioGX LLC", "relationship_type": "DEVELOPED_WITH", "contribution": "Sample Ready assays"},
+    {"from": "WetLab-2", "to": "TechShot", "relationship_type": "DEVELOPED_WITH", "contribution": "ACT2 hardware"}
+]
+
+# Adicionando relacionamentos de Autoria e Afiliação (exemplo)
+author_paper_rels = [
+    {"from": author["author_id"], "to": papers[0]["paper_id"], "relationship_type": "WROTE"} for author in authors
+]
+
+author_institution_rels = [
+    {"from": "Macarena Parra", "to": "NASA Ames Research Center", "relationship_type": "AFFILIATED_WITH"},
+    {"from": "Kathleen Rubins", "to": "NASA Johnson Space Center", "relationship_type": "AFFILIATED_WITH"},
+    # ... (e assim por diante para todos os autores e suas afiliações)
+]
