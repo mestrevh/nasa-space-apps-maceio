@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <title>Visualização do Grafo Neo4j (Dinâmico)</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #mynetwork {
+            width: 100%;
+            height: 95vh;
+            border: 1px solid lightgray;
+        }
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+    // Função para desenhar o grafo
+    function desenharGrafo(graphData) {
+        var nodes = new vis.DataSet(graphData.nodes);
+        var edges = new vis.DataSet(graphData.edges);
+
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {
+            nodes: { shape: 'dot', size: 16 },
+            physics: {
+                forceAtlas2Based: {
+                    gravitationalConstant: -26,
+                    centralGravity: 0.005,
+                    springLength: 230,
+                    springConstant: 0.18
+                },
+                maxVelocity: 146,
+                solver: 'forceAtlas2Based',
+                timestep: 0.35,
+                stabilization: {iterations: 150}
+            },
+            layout: { improvedLayout: false }
+        };
+        var network = new vis.Network(container, data, options);
+    }
+
+    // --- A MÁGICA ACONTECE AQUI ---
+    // Quando a página carregar, busca os dados da nossa API Python
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Página carregada. Buscando dados do grafo...");
+        
+        fetch('http://127.0.0.1:5000/api/data')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na rede: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Dados recebidos:", data);
+                desenharGrafo(data); // Chama a função para desenhar o grafo
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados do grafo:', error);
+                // Mostra uma mensagem de erro na tela
+                document.getElementById('mynetwork').innerHTML = '<h1>Falha ao carregar os dados do grafo. Verifique o console.</h1>';
+            });
+    });
+</script>
+
+</body>
+</html>
