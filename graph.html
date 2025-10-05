@@ -6,9 +6,13 @@
     <title>Data SpaceBio - Graph Visualization</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
+            height: 100%;
+            overflow: hidden; /* Prevent page scroll */
+        }
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #1a1a1a; /* Dark background for the main content area */
             color: #e0e0e0; /* Light text color for readability */
@@ -16,11 +20,14 @@
         .container {
             display: flex;
             height: 100vh;
+            width: 100vw;
             background-color: #1a1a1a; /* Dark background for the main content area */
             color: #e0e0e0; /* Light text color for readability */
+            flex-direction: row; /* Ensure horizontal layout */
         }
         .sidebar {
             width: 350px;
+            min-width: 350px; /* Prevent sidebar from shrinking */
             padding: 20px;
             background-color: #282828; /* Slightly lighter dark for sidebar */
             border-right: 1px solid #3a3a3a; /* Darker border */
@@ -28,6 +35,7 @@
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: #282828 #282828;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
         }
         
         .sidebar::-webkit-scrollbar {
@@ -48,11 +56,17 @@
         }
         .main-content {
             flex-grow: 1;
+            flex-shrink: 1;
+            min-width: 0; /* Allow content to shrink */
+            display: flex;
+            flex-direction: column;
         }
         #mynetwork {
             width: 100%;
             height: 100%;
+            min-height: 100vh;
             background-color: #1a1a1a; /* Ensure the network background matches body */
+            flex-grow: 1;
         }
         h1, h2 {
             color: #f0f0f0; /* Lighter color for headings */
