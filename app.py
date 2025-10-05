@@ -33,11 +33,10 @@ def clear_database():
         with driver.session(database="neo4j") as session:
             session.run("MATCH (n) DETACH DELETE n")
             print("Database cleared successfully!")
+            return True
     except Exception as e:
         print(f"Error clearing database: {e}")
-
-# Clear database when app starts
-clear_database()
+        return False
 
 # Load sample data after clearing
 def load_sample_data():
@@ -50,13 +49,19 @@ def load_sample_data():
                               capture_output=True, text=True)
         if result.returncode == 0:
             print("Sample data loaded successfully!")
+            return True
         else:
             print(f"Error loading sample data: {result.stderr}")
+            return False
     except Exception as e:
         print(f"Error loading sample data: {e}")
+        return False
 
-# Load sample data after clearing
-load_sample_data()
+# Try to clear and load data, but continue if Neo4j is not available
+if clear_database():
+    load_sample_data()
+else:
+    print("Neo4j not available - running in demo mode without database")
 
 
 # --- PROCESSING FUNCTIONS (Original script logic) ---
@@ -120,29 +125,109 @@ def load_data_into_neo4j(entities, relationships):
 
 def fetch_graph_data():
     """Fetches nodes and relationships from Neo4j for visualization."""
-    nodes = []
-    edges = []
-    node_ids = set()
-    with driver.session(database="neo4j") as session:
-        result = session.run("MATCH (n)-[r]->(m) RETURN n, r, m LIMIT 100")
-        for record in result:
-            node_n, rel, node_m = record["n"], record["r"], record["m"]
+    try:
+        nodes = []
+        edges = []
+        node_ids = set()
+        with driver.session(database="neo4j") as session:
+            result = session.run("MATCH (n)-[r]->(m) RETURN n, r, m LIMIT 100")
+            for record in result:
+                node_n, rel, node_m = record["n"], record["r"], record["m"]
 
-            if node_n.element_id not in node_ids:
-                node_ids.add(node_n.element_id)
-                label = get_node_label(node_n)
-                nodes.append({"id": node_n.element_id, "label": label, "group": list(node_n.labels)[0]})
+                if node_n.element_id not in node_ids:
+                    node_ids.add(node_n.element_id)
+                    label = get_node_label(node_n)
+                    full_label = get_full_node_label(node_n)
+                    article_group = get_article_group(node_n)
+                    nodes.append({
+                        "id": node_n.element_id, 
+                        "label": label, 
+                        "fullLabel": full_label,
+                        "group": list(node_n.labels)[0],
+                        "articleGroup": article_group
+                    })
 
-            if node_m.element_id not in node_ids:
-                node_ids.add(node_m.element_id)
-                label = get_node_label(node_m)
-                nodes.append({"id": node_m.element_id, "label": label, "group": list(node_m.labels)[0]})
+                if node_m.element_id not in node_ids:
+                    node_ids.add(node_m.element_id)
+                    label = get_node_label(node_m)
+                    full_label = get_full_node_label(node_m)
+                    article_group = get_article_group(node_m)
+                    nodes.append({
+                        "id": node_m.element_id, 
+                        "label": label, 
+                        "fullLabel": full_label,
+                        "group": list(node_m.labels)[0],
+                        "articleGroup": article_group
+                    })
 
-            edges.append({"from": rel.start_node.element_id, "to": rel.end_node.element_id, "label": type(rel).__name__})
-    return {"nodes": nodes, "edges": edges}
+                edges.append({"from": rel.start_node.element_id, "to": rel.end_node.element_id, "label": type(rel).__name__})
+        return {"nodes": nodes, "edges": edges}
+    except Exception as e:
+        print(f"Neo4j not available, returning demo data: {e}")
+        return get_demo_data()
+
+def get_demo_data():
+    """Returns demo data when Neo4j is not available"""
+    return {
+        "nodes": [
+            {"id": "1", "label": "NASA Space Apps", "fullLabel": "NASA Space Apps Challenge 2024", "group": "Paper"},
+            {"id": "2", "label": "Microgravity Research", "fullLabel": "Microgravity and Cellular Biology Research", "group": "Keyword"},
+            {"id": "3", "label": "ISS", "fullLabel": "International Space Station", "group": "Mission"},
+            {"id": "4", "label": "Stem Cells", "fullLabel": "Adipose-Derived Stem Cells", "group": "CellType"},
+            {"id": "5", "label": "qPCR", "fullLabel": "Quantitative Polymerase Chain Reaction", "group": "Method"}
+        ],
+        "edges": [
+            {"from": "1", "to": "2", "label": "STUDIES"},
+            {"from": "1", "to": "3", "label": "USED_IN"},
+            {"from": "2", "to": "4", "label": "AFFECTS"},
+            {"from": "3", "to": "5", "label": "VALIDATES"}
+        ]
+    }
 
 def get_node_label(node):
     """Get the appropriate label for a node based on its properties."""
+    # Try different possible label fields based on node type
+    if "title" in node:
+        label = node["title"]
+    elif "name" in node:
+        label = node["name"]
+    elif "term" in node:
+        label = node["term"]
+    elif "paper_id" in node:
+        label = node["paper_id"]
+    elif "author_id" in node:
+        label = node["author_id"]
+    elif "institution_id" in node:
+        label = node["institution_id"]
+    elif "keyword_id" in node:
+        label = node["keyword_id"]
+    elif "cell_type_id" in node:
+        label = node["cell_type_id"]
+    elif "gene_id" in node:
+        label = node["gene_id"]
+    elif "method_id" in node:
+        label = node["method_id"]
+    elif "material_id" in node:
+        label = node["material_id"]
+    elif "funder_id" in node:
+        label = node["funder_id"]
+    elif "mission_id" in node:
+        label = node["mission_id"]
+    else:
+        # Fallback: use the first available property
+        properties = dict(node)
+        if properties:
+            label = str(list(properties.values())[0])
+        else:
+            label = "Unnamed"
+    
+    # Truncate long labels to prevent node stretching
+    if len(label) > 50:
+        return label[:47] + "..."
+    return label
+
+def get_full_node_label(node):
+    """Get the full label for a node without truncation (for tooltips)."""
     # Try different possible label fields based on node type
     if "title" in node:
         return node["title"]
@@ -177,6 +262,38 @@ def get_node_label(node):
             return str(list(properties.values())[0])
         return "Unnamed"
 
+def get_article_group(node):
+    """Determine which article group a node belongs to based on its properties."""
+    # Check if this is a Paper node
+    if "paper_id" in node:
+        paper_id = node["paper_id"]
+        if "10.3390/cells10030560" in paper_id:
+            return "article1"
+        elif "10.1371/journal.pone.0183480" in paper_id:
+            return "article2"
+        else:
+            return "unknown"
+    
+    # For other nodes, we need to check their relationships to papers
+    # This is a simplified approach - in a real scenario, you'd query the relationships
+    # For now, we'll use a heuristic based on node properties
+    
+    # Check if node has properties that suggest it belongs to a specific article
+    if "name" in node:
+        name = node["name"].lower()
+        # Keywords and terms that are more specific to article 1 (adipose stem cells)
+        article1_keywords = ["adipose", "stem", "cell", "proliferation", "microgravity", "stirred", "microspheres"]
+        # Keywords and terms that are more specific to article 2 (RNA isolation, ISS)
+        article2_keywords = ["rna", "isolation", "pcr", "quantitative", "real", "time", "iss", "space", "station"]
+        
+        if any(keyword in name for keyword in article1_keywords):
+            return "article1"
+        elif any(keyword in name for keyword in article2_keywords):
+            return "article2"
+    
+    # Default to shared/unknown for nodes that could belong to both articles
+    return "shared"
+
 
 # --- WEB APPLICATION ROUTES (Endpoints) ---
 
@@ -184,6 +301,11 @@ def get_node_label(node):
 def main_page():
     """Serves the main HTML page."""
     return render_template('index.html')
+
+@app.route('/systematic-review')
+def systematic_review():
+    """Serves the systematic review page."""
+    return render_template('systematic_review.html')
 
 
 @app.route('/api/data')
@@ -195,25 +317,40 @@ def get_graph_data():
 @app.route('/api/nodes')
 def get_node_list():
     """API endpoint that returns a simplified list of all nodes."""
-    nodes = []
-    with driver.session(database="neo4j") as session:
-        # This query fetches all nodes with their properties
-        query = """
-        MATCH (n) 
-        RETURN n, elementId(n) AS id, labels(n)[0] AS group
-        ORDER BY id(n)
-        """
-        result = session.run(query)
-        # Convert the result into a list of dictionaries
-        for record in result:
-            node = record["n"]
-            label = get_node_label(node)
-            nodes.append({
-                "name": label,
-                "id": record["id"],
-                "group": record["group"]
+    try:
+        nodes = []
+        with driver.session(database="neo4j") as session:
+            # This query fetches all nodes with their properties
+            query = """
+            MATCH (n) 
+            RETURN n, elementId(n) AS id, labels(n)[0] AS group
+            ORDER BY id(n)
+            """
+            result = session.run(query)
+            # Convert the result into a list of dictionaries
+            for record in result:
+                node = record["n"]
+                label = get_node_label(node)
+                full_label = get_full_node_label(node)
+                nodes.append({
+                    "name": label,
+                    "fullName": full_label,
+                    "id": record["id"],
+                    "group": record["group"]
+                })
+        return jsonify(nodes)
+    except Exception as e:
+        print(f"Neo4j not available, returning demo node list: {e}")
+        demo_data = get_demo_data()
+        demo_nodes = []
+        for node in demo_data["nodes"]:
+            demo_nodes.append({
+                "name": node["label"],
+                "fullName": node["fullLabel"],
+                "id": node["id"],
+                "group": node["group"]
             })
-    return jsonify(nodes)
+        return jsonify(demo_nodes)
 
 
 @app.route('/upload', methods=['POST'])

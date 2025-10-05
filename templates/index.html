@@ -85,6 +85,7 @@
     <div class="sidebar">
         <h1>PDF Analysis</h1>
         <p>Upload a PDF document to extract entities and relationships, and view them in the graph.</p>
+        <p><strong>💡 Dica:</strong> Clique em qualquer nó para ver a revisão sistemática!</p>
         
         <form id="upload-form">
             <input type="file" id="pdf-input" name="pdf_file" accept=".pdf" required>
@@ -111,10 +112,40 @@
 
     // 1. Function to draw or update the graph
     function drawGraph(graphData) {
+        // Process nodes to add visual grouping based on articles
+        const processedNodes = graphData.nodes.map((node, index) => {
+            const processedNode = { ...node };
+            
+            // Override the group to use articleGroup for visual separation
+            if (node.articleGroup) {
+                processedNode.group = node.articleGroup;
+            }
+            
+            // Add visual properties based on article group with more spacing
+            if (node.articleGroup === 'article1') {
+                // Article 1 nodes on the left side with more spacing
+                processedNode.x = -500 + (index % 3) * 150;
+                processedNode.y = -300 + Math.floor(index / 3) * 200;
+                processedNode.fixed = { x: false, y: false };
+            } else if (node.articleGroup === 'article2') {
+                // Article 2 nodes on the right side with more spacing
+                processedNode.x = 500 + (index % 3) * 150;
+                processedNode.y = -300 + Math.floor(index / 3) * 200;
+                processedNode.fixed = { x: false, y: false };
+            } else {
+                // Shared nodes in the middle with more spacing
+                processedNode.x = (index % 2) * 100 - 50;
+                processedNode.y = -150 + Math.floor(index / 2) * 150;
+                processedNode.fixed = { x: false, y: false };
+            }
+            
+            return processedNode;
+        });
+        
         // Clear old data and add new
         nodesDataSet.clear();
         edgesDataSet.clear();
-        nodesDataSet.add(graphData.nodes);
+        nodesDataSet.add(processedNodes);
         edgesDataSet.add(graphData.edges);
 
         const data = {
@@ -126,26 +157,319 @@
             interaction: {
                 hover: true // Enable hover effects, necessary for cursor change
             },
-            // NEW: Vis.js options for node/edge styling in dark theme
+            // Layout and physics settings for better spacing - no overlap
+            physics: {
+                enabled: true,
+                stabilization: { iterations: 400 },
+                barnesHut: {
+                    gravitationalConstant: -5000,
+                    centralGravity: 0.03,
+                    springLength: 500,
+                    springConstant: 0.01,
+                    damping: 0.2,
+                    avoidOverlap: 1.5
+                }
+            },
+            layout: {
+                improvedLayout: true,
+                clusterThreshold: 400,
+                hierarchical: {
+                    enabled: false
+                }
+            },
+            // Improved node styling - circular and larger with no overlap
             nodes: {
-                font: { color: '#e0e0e0' } // Light font for node labels
+                font: { 
+                    color: '#ffffff',
+                    size: 14,
+                    face: 'arial',
+                    multi: true,
+                    strokeWidth: 3,
+                    strokeColor: '#000000'
+                },
+                borderWidth: 3,
+                borderWidthSelected: 4,
+                shadow: {
+                    enabled: true,
+                    color: 'rgba(0,0,0,0.4)',
+                    size: 8,
+                    x: 3,
+                    y: 3
+                },
+                shape: 'circle',
+                size: 30,
+                margin: 25,
+                chosen: true,
+                chosenNode: function(values, id, selected, hovering) {
+                    values.size = values.size * 1.2;
+                }
             },
             edges: {
-                color: { inherit: 'from' }, // Edges inherit color from nodes
-                font: { color: '#e0e0e0' } // Light font for edge labels
+                color: { 
+                    color: '#888888',
+                    highlight: '#ffffff',
+                    hover: '#cccccc'
+                },
+                font: { 
+                    color: '#e0e0e0',
+                    size: 12,
+                    strokeWidth: 0,
+                    background: 'rgba(0,0,0,0.7)',
+                    strokeColor: '#000000'
+                },
+                width: 3,
+                smooth: {
+                    type: 'continuous',
+                    forceDirection: 'none',
+                    roundness: 0.2
+                },
+                arrows: {
+                    to: {
+                        enabled: true,
+                        scaleFactor: 1.2,
+                        type: 'arrow'
+                    }
+                }
             },
-            // If you use groups, define their colors here
+            // Define colors for different node types
             groups: {
-                PER: { color: '#FF7F50' }, // Coral
-                LOC: { color: '#6495ED' }, // CornflowerBlue
-                ORG: { color: '#90EE90' }, // LightGreen
-                DATE: { color: '#FFD700' }, // Gold
-                MISC: { color: '#D8BFD8' }, // Thistle
-                // Add more groups as needed based on your spaCy labels
+                // Article 1 group (left side) - Blue tones
+                article1: {
+                    color: { 
+                        background: '#4A90E2',
+                        border: '#357ABD',
+                        highlight: { background: '#5BA0F2', border: '#4A90E2' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 35
+                },
+                // Article 2 group (right side) - Green tones  
+                article2: {
+                    color: { 
+                        background: '#7ED321',
+                        border: '#5BA817',
+                        highlight: { background: '#8EE331', border: '#7ED321' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 35
+                },
+                // Shared nodes (middle) - Orange tones
+                shared: {
+                    color: { 
+                        background: '#F5A623',
+                        border: '#D18A1F',
+                        highlight: { background: '#F5B633', border: '#F5A623' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 32
+                },
+                Paper: { 
+                    color: { 
+                        background: '#4A90E2',
+                        border: '#357ABD',
+                        highlight: { background: '#5BA0F2', border: '#4A90E2' },
+                        hover: { background: '#6BA3F5', border: '#4A90E2' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 35,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.3;
+                        values.borderWidth = 4;
+                    }
+                },
+                Author: { 
+                    color: { 
+                        background: '#7ED321',
+                        border: '#5BA817',
+                        highlight: { background: '#8EE331', border: '#7ED321' },
+                        hover: { background: '#8EE331', border: '#7ED321' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 30,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Institution: { 
+                    color: { 
+                        background: '#F5A623',
+                        border: '#D18A1F',
+                        highlight: { background: '#F5B633', border: '#F5A623' },
+                        hover: { background: '#F5B633', border: '#F5A623' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 32,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Keyword: { 
+                    color: { 
+                        background: '#BD10E0',
+                        border: '#9D0DC0',
+                        highlight: { background: '#CD20F0', border: '#BD10E0' },
+                        hover: { background: '#CD20F0', border: '#BD10E0' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 28,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                CellType: { 
+                    color: { 
+                        background: '#50E3C2',
+                        border: '#40C3A2',
+                        highlight: { background: '#60F3D2', border: '#50E3C2' },
+                        hover: { background: '#60F3D2', border: '#50E3C2' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 30,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Gene: { 
+                    color: { 
+                        background: '#B8E986',
+                        border: '#98C966',
+                        highlight: { background: '#C8F996', border: '#B8E986' },
+                        hover: { background: '#C8F996', border: '#B8E986' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 28,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Method: { 
+                    color: { 
+                        background: '#D0021B',
+                        border: '#B0020B',
+                        highlight: { background: '#E0122B', border: '#D0021B' },
+                        hover: { background: '#E0122B', border: '#D0021B' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 32,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Material: { 
+                    color: { 
+                        background: '#9013FE',
+                        border: '#7003DE',
+                        highlight: { background: '#A023FE', border: '#9013FE' },
+                        hover: { background: '#A023FE', border: '#9013FE' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 30,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Funder: { 
+                    color: { 
+                        background: '#417505',
+                        border: '#315505',
+                        highlight: { background: '#518505', border: '#417505' },
+                        hover: { background: '#518505', border: '#417505' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 28,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                },
+                Mission: { 
+                    color: { 
+                        background: '#FF6900',
+                        border: '#DF4900',
+                        highlight: { background: '#FF7910', border: '#FF6900' },
+                        hover: { background: '#FF7910', border: '#FF6900' }
+                    },
+                    font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
+                    size: 35,
+                    chosen: true,
+                    chosenNode: function(values, id, selected, hovering) {
+                        values.size = values.size * 1.2;
+                        values.borderWidth = 3;
+                    }
+                }
             }
         };
 
         network = new vis.Network(container, data, options);
+
+        // Force stabilization to prevent overlap
+        network.on('stabilizationIterationsDone', function() {
+            network.setOptions({
+                physics: {
+                    enabled: false
+                }
+            });
+        });
+
+        // Add tooltip functionality
+        network.on('hoverNode', function(params) {
+            if (params.node) {
+                const node = nodesDataSet.get(params.node);
+                if (node && node.fullLabel) {
+                    // Show tooltip with full text
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'vis-tooltip';
+                    
+                    // Add click instruction for all nodes
+                    let tooltipContent = node.fullLabel;
+                    tooltipContent += '<br><br><strong style="color: #4A90E2;">📚 Clique para ver a revisão sistemática!</strong>';
+                    
+                    tooltip.innerHTML = tooltipContent;
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.background = '#333';
+                    tooltip.style.color = '#e0e0e0';
+                    tooltip.style.padding = '8px';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.border = '1px solid #555';
+                    tooltip.style.fontSize = '12px';
+                    tooltip.style.maxWidth = '300px';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    // Position tooltip near cursor
+                    const updateTooltip = (e) => {
+                        tooltip.style.left = (e.clientX + 10) + 'px';
+                        tooltip.style.top = (e.clientY - 10) + 'px';
+                    };
+                    
+                    document.addEventListener('mousemove', updateTooltip);
+                    
+                    // Remove tooltip when mouse leaves node
+                    network.on('blurNode', function() {
+                        document.body.removeChild(tooltip);
+                        document.removeEventListener('mousemove', updateTooltip);
+                    });
+                }
+            }
+        });
 
         // --- THE MAGIC HAPPENS HERE ---
         // Add a listener for click events on the network
@@ -156,14 +480,9 @@
                 const node = nodesDataSet.get(nodeId); // Get full node data
 
                 if (node && node.label) {
-                    // Create a Google search URL with the node's label
-                    const query = encodeURIComponent(node.label);
-                    const url = `https://www.google.com/search?q=${query}`;
-                    
-                    console.log(`Opening link for node ${nodeId}: ${url}`);
-                    
-                    // Open the link in a new tab
-                    window.open(url, '_blank');
+                    // Redirect all nodes to systematic review page
+                    console.log(`Redirecting to systematic review for ${node.group} node: ${node.label}`);
+                    window.location.href = '/systematic-review';
                 }
             }
         });
