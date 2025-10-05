@@ -144,11 +144,27 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .sidebar {
-                width: 250px;
-            }
-        }
+         @media (max-width: 480px) {
+             .sidebar {
+                 width: 250px;
+             }
+         }
+
+         /* Tooltip styles */
+         .vis-tooltip {
+             animation: tooltipFadeIn 0.2s ease-in-out;
+         }
+
+         @keyframes tooltipFadeIn {
+             from {
+                 opacity: 0;
+                 transform: translateY(-5px);
+             }
+             to {
+                 opacity: 1;
+                 transform: translateY(0);
+             }
+         }
     </style>
 </head>
 
@@ -187,37 +203,79 @@
         let edgesDataSet = new vis.DataSet([]);
         let currentSelectedNode = null;
 
-        // 1. Function to draw or update the graph
-        function drawGraph(graphData) {
-            // Process nodes to add visual grouping based on articles
-            const processedNodes = graphData.nodes.map((node, index) => {
-                const processedNode = { ...node };
+         // Function to break long text into multiple lines
+         function breakTextIntoLines(text, maxLength = 8) {
+             if (text.length <= maxLength) {
+                 return text;
+             }
+             
+             const words = text.split(' ');
+             const lines = [];
+             let currentLine = '';
+             
+             for (const word of words) {
+                 if ((currentLine + word).length <= maxLength) {
+                     currentLine += (currentLine ? ' ' : '') + word;
+                 } else {
+                     if (currentLine) {
+                         lines.push(currentLine);
+                         currentLine = word;
+                     } else {
+                         // Word is too long, break it
+                         lines.push(word.substring(0, maxLength));
+                         currentLine = word.substring(maxLength);
+                     }
+                 }
+             }
+             
+             if (currentLine) {
+                 lines.push(currentLine);
+             }
+             
+             // Limit to maximum 4 lines to fit in circle
+             if (lines.length > 4) {
+                 return lines.slice(0, 4).join('\n') + '...';
+             }
+             
+             return lines.join('\n');
+         }
 
-                // Override the group to use articleGroup for visual separation
-                if (node.articleGroup) {
-                    processedNode.group = node.articleGroup;
-                }
+         // 1. Function to draw or update the graph
+         function drawGraph(graphData) {
+             // Process nodes to add visual grouping based on articles
+             const processedNodes = graphData.nodes.map((node, index) => {
+                 const processedNode = { ...node };
 
-                // Add visual properties based on article group with more spacing
-                if (node.articleGroup === 'Células-Tronco Adiposas') {
-                    // Células-Tronco Adiposas nodes on the left side with more spacing
-                    processedNode.x = -500 + (index % 3) * 150;
-                    processedNode.y = -300 + Math.floor(index / 3) * 200;
-                    processedNode.fixed = { x: false, y: false };
-                } else if (node.articleGroup === 'Isolamento de RNA na ISS') {
-                    // Isolamento de RNA na ISS nodes on the right side with more spacing
-                    processedNode.x = 500 + (index % 3) * 150;
-                    processedNode.y = -300 + Math.floor(index / 3) * 200;
-                    processedNode.fixed = { x: false, y: false };
-                } else {
-                    // Conceitos Compartilhados nodes in the middle with more spacing
-                    processedNode.x = (index % 2) * 100 - 50;
-                    processedNode.y = -150 + Math.floor(index / 2) * 150;
-                    processedNode.fixed = { x: false, y: false };
-                }
+                 // Break long labels into multiple lines
+                 if (processedNode.label && processedNode.label.length > 8) {
+                     processedNode.label = breakTextIntoLines(processedNode.label, 6);
+                 }
 
-                return processedNode;
-            });
+                 // Override the group to use articleGroup for visual separation
+                 if (node.articleGroup) {
+                     processedNode.group = node.articleGroup;
+                 }
+
+                 // Add visual properties based on article group with more spacing
+                 if (node.articleGroup === 'Células-Tronco Adiposas') {
+                     // Células-Tronco Adiposas nodes on the left side with more spacing
+                     processedNode.x = -500 + (index % 3) * 150;
+                     processedNode.y = -300 + Math.floor(index / 3) * 200;
+                     processedNode.fixed = { x: false, y: false };
+                 } else if (node.articleGroup === 'Isolamento de RNA na ISS') {
+                     // Isolamento de RNA na ISS nodes on the right side with more spacing
+                     processedNode.x = 500 + (index % 3) * 150;
+                     processedNode.y = -300 + Math.floor(index / 3) * 200;
+                     processedNode.fixed = { x: false, y: false };
+                 } else {
+                     // Conceitos Compartilhados nodes in the middle with more spacing
+                     processedNode.x = (index % 2) * 100 - 50;
+                     processedNode.y = -150 + Math.floor(index / 2) * 150;
+                     processedNode.fixed = { x: false, y: false };
+                 }
+
+                 return processedNode;
+             });
 
             // Clear old data and add new
             nodesDataSet.clear();
@@ -254,33 +312,34 @@
                         enabled: false
                     }
                 },
-                // Improved node styling - circular and larger with no overlap
-                nodes: {
-                    font: {
-                        color: '#ffffff',
-                        size: 14,
-                        face: 'arial',
-                        multi: true,
-                        strokeWidth: 3,
-                        strokeColor: '#000000'
-                    },
-                    borderWidth: 3,
-                    borderWidthSelected: 4,
-                    shadow: {
-                        enabled: true,
-                        color: 'rgba(0,0,0,0.4)',
-                        size: 8,
-                        x: 3,
-                        y: 3
-                    },
-                    shape: 'circle',
-                    size: 30,
-                    margin: 25,
-                    chosen: true,
-                    chosenNode: function (values, id, selected, hovering) {
-                        values.size = values.size * 1.2;
-                    }
-                },
+                 // Improved node styling - smaller circles with line breaks
+                 nodes: {
+                     font: {
+                         color: '#ffffff',
+                         size: 8,
+                         face: 'arial',
+                         multi: true,
+                         strokeWidth: 1,
+                         strokeColor: '#000000',
+                         align: 'center'
+                     },
+                     borderWidth: 2,
+                     borderWidthSelected: 3,
+                     shadow: {
+                         enabled: true,
+                         color: 'rgba(0,0,0,0.4)',
+                         size: 6,
+                         x: 2,
+                         y: 2
+                     },
+                     shape: 'circle',
+                     size: 20,
+                     margin: 15,
+                     chosen: true,
+                     chosenNode: function (values, id, selected, hovering) {
+                         values.size = values.size * 1.1;
+                     }
+                 },
                 edges: {
                     color: {
                         color: '#888888',
@@ -310,36 +369,36 @@
                 },
                 // Define colors for different node types
                 groups: {
-                    // Células-Tronco Adiposas group (left side) - Blue tones
-                    "Células-Tronco Adiposas": {
-                        color: {
-                            background: '#4A90E2',
-                            border: '#357ABD',
-                            highlight: { background: '#5BA0F2', border: '#4A90E2' }
-                        },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 35
-                    },
-                    // Isolamento de RNA na ISS group (right side) - Green tones  
-                    "Isolamento de RNA na ISS": {
-                        color: {
-                            background: '#7ED321',
-                            border: '#5BA817',
-                            highlight: { background: '#8EE331', border: '#7ED321' }
-                        },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 35
-                    },
-                    // Conceitos Compartilhados (middle) - Orange tones
-                    "Conceitos Compartilhados": {
-                        color: {
-                            background: '#F5A623',
-                            border: '#D18A1F',
-                            highlight: { background: '#F5B633', border: '#F5A623' }
-                        },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 32
-                    },
+                     // Células-Tronco Adiposas group (left side) - Blue tones
+                     "Células-Tronco Adiposas": {
+                         color: {
+                             background: '#4A90E2',
+                             border: '#357ABD',
+                             highlight: { background: '#5BA0F2', border: '#4A90E2' }
+                         },
+                         font: { color: '#ffffff', size: 8, strokeWidth: 1, strokeColor: '#000000', align: 'center' },
+                         size: 22
+                     },
+                     // Isolamento de RNA na ISS group (right side) - Green tones  
+                     "Isolamento de RNA na ISS": {
+                         color: {
+                             background: '#7ED321',
+                             border: '#5BA817',
+                             highlight: { background: '#8EE331', border: '#7ED321' }
+                         },
+                         font: { color: '#ffffff', size: 8, strokeWidth: 1, strokeColor: '#000000', align: 'center' },
+                         size: 22
+                     },
+                     // Conceitos Compartilhados (middle) - Orange tones
+                     "Conceitos Compartilhados": {
+                         color: {
+                             background: '#F5A623',
+                             border: '#D18A1F',
+                             highlight: { background: '#F5B633', border: '#F5A623' }
+                         },
+                         font: { color: '#ffffff', size: 8, strokeWidth: 1, strokeColor: '#000000', align: 'center' },
+                         size: 20
+                     },
                     Paper: {
                         color: {
                             background: '#4A90E2',
@@ -347,12 +406,12 @@
                             highlight: { background: '#5BA0F2', border: '#4A90E2' },
                             hover: { background: '#6BA3F5', border: '#4A90E2' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 35,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 22,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.3;
-                            values.borderWidth = 4;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 3;
                         }
                     },
                     Author: {
@@ -362,12 +421,12 @@
                             highlight: { background: '#8EE331', border: '#7ED321' },
                             hover: { background: '#8EE331', border: '#7ED321' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 30,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 18,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Institution: {
@@ -377,12 +436,12 @@
                             highlight: { background: '#F5B633', border: '#F5A623' },
                             hover: { background: '#F5B633', border: '#F5A623' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 32,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 20,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Keyword: {
@@ -392,12 +451,12 @@
                             highlight: { background: '#CD20F0', border: '#BD10E0' },
                             hover: { background: '#CD20F0', border: '#BD10E0' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 28,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 16,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     CellType: {
@@ -407,12 +466,12 @@
                             highlight: { background: '#60F3D2', border: '#50E3C2' },
                             hover: { background: '#60F3D2', border: '#50E3C2' }
                         },
-                        font: { color: '#000000', size: 14, strokeWidth: 3, strokeColor: '#ffffff' },
-                        size: 30,
+                        font: { color: '#000000', size: 8, strokeWidth: 1, strokeColor: '#ffffff', align: 'center' },
+                        size: 18,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Gene: {
@@ -422,12 +481,12 @@
                             highlight: { background: '#C8F996', border: '#B8E986' },
                             hover: { background: '#C8F996', border: '#B8E986' }
                         },
-                        font: { color: '#000000', size: 14, strokeWidth: 3, strokeColor: '#ffffff' },
-                        size: 28,
+                        font: { color: '#000000', size: 8, strokeWidth: 1, strokeColor: '#ffffff', align: 'center' },
+                        size: 16,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Method: {
@@ -437,12 +496,12 @@
                             highlight: { background: '#E0122B', border: '#D0021B' },
                             hover: { background: '#E0122B', border: '#D0021B' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 32,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 20,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Material: {
@@ -452,12 +511,12 @@
                             highlight: { background: '#A023FE', border: '#9013FE' },
                             hover: { background: '#A023FE', border: '#9013FE' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 30,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 18,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Funder: {
@@ -467,12 +526,12 @@
                             highlight: { background: '#518505', border: '#417505' },
                             hover: { background: '#518505', border: '#417505' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 28,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 16,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     },
                     Mission: {
@@ -482,12 +541,12 @@
                             highlight: { background: '#FF7910', border: '#FF6900' },
                             hover: { background: '#FF7910', border: '#FF6900' }
                         },
-                        font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
-                        size: 35,
+                        font: { color: '#ffffff', size: 10, strokeWidth: 2, strokeColor: '#000000' },
+                        size: 22,
                         chosen: true,
                         chosenNode: function (values, id, selected, hovering) {
-                            values.size = values.size * 1.2;
-                            values.borderWidth = 3;
+                            values.size = values.size * 1.1;
+                            values.borderWidth = 2;
                         }
                     }
                 }
@@ -507,49 +566,87 @@
                 });
             });
 
-            // Add tooltip functionality
-            network.on('hoverNode', function (params) {
-                if (params.node) {
-                    const node = nodesDataSet.get(params.node);
-                    if (node && node.fullLabel) {
-                        // Show tooltip with full text
-                        const tooltip = document.createElement('div');
-                        tooltip.className = 'vis-tooltip';
+             // Add tooltip functionality
+             let currentTooltip = null;
+             
+             network.on('hoverNode', function (params) {
+                 if (params.node) {
+                     const node = nodesDataSet.get(params.node);
+                     if (node) {
+                         // Remove existing tooltip if any
+                         if (currentTooltip) {
+                             document.body.removeChild(currentTooltip);
+                             currentTooltip = null;
+                         }
+                         
+                         // Create new tooltip
+                         const tooltip = document.createElement('div');
+                         tooltip.className = 'vis-tooltip';
+                         currentTooltip = tooltip;
 
-                        // Add click instruction for all nodes
-                        let tooltipContent = node.fullLabel;
-                        tooltipContent += '<br><br><strong style="color: #4A90E2;">Clique para ver a revisão sistemática!</strong>';
+                         // Get full text (use fullLabel if available, otherwise use original label)
+                         const fullText = node.fullLabel || node.label || 'Nó sem descrição';
+                         
+                         // Create tooltip content
+                         let tooltipContent = `<div style="font-weight: bold; margin-bottom: 8px; color: #4A90E2;">${node.group || 'Nó'}</div>`;
+                         tooltipContent += `<div style="margin-bottom: 8px;">${fullText}</div>`;
+                         tooltipContent += `<div style="font-size: 10px; color: #888; border-top: 1px solid #555; padding-top: 6px; margin-top: 6px;">Clique para ver a revisão sistemática!</div>`;
 
-                        tooltip.innerHTML = tooltipContent;
-                        tooltip.style.position = 'absolute';
-                        tooltip.style.background = '#333';
-                        tooltip.style.color = '#e0e0e0';
-                        tooltip.style.padding = '8px';
-                        tooltip.style.borderRadius = '4px';
-                        tooltip.style.border = '1px solid #555';
-                        tooltip.style.fontSize = '12px';
-                        tooltip.style.maxWidth = '300px';
-                        tooltip.style.zIndex = '1000';
-                        tooltip.style.pointerEvents = 'none';
+                         tooltip.innerHTML = tooltipContent;
+                         tooltip.style.position = 'absolute';
+                         tooltip.style.background = 'rgba(0, 0, 0, 0.9)';
+                         tooltip.style.color = '#e0e0e0';
+                         tooltip.style.padding = '12px';
+                         tooltip.style.borderRadius = '8px';
+                         tooltip.style.border = '1px solid #555';
+                         tooltip.style.fontSize = '12px';
+                         tooltip.style.maxWidth = '350px';
+                         tooltip.style.minWidth = '200px';
+                         tooltip.style.zIndex = '10000';
+                         tooltip.style.pointerEvents = 'none';
+                         tooltip.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+                         tooltip.style.backdropFilter = 'blur(5px)';
+                         tooltip.style.wordWrap = 'break-word';
+                         tooltip.style.lineHeight = '1.4';
 
-                        document.body.appendChild(tooltip);
+                         document.body.appendChild(tooltip);
 
-                        // Position tooltip near cursor
-                        const updateTooltip = (e) => {
-                            tooltip.style.left = (e.clientX + 10) + 'px';
-                            tooltip.style.top = (e.clientY - 10) + 'px';
-                        };
+                         // Position tooltip near cursor
+                         const updateTooltip = (e) => {
+                             const tooltipRect = tooltip.getBoundingClientRect();
+                             const viewportWidth = window.innerWidth;
+                             const viewportHeight = window.innerHeight;
+                             
+                             let left = e.clientX + 15;
+                             let top = e.clientY - 10;
+                             
+                             // Adjust if tooltip goes off screen
+                             if (left + tooltipRect.width > viewportWidth) {
+                                 left = e.clientX - tooltipRect.width - 15;
+                             }
+                             if (top + tooltipRect.height > viewportHeight) {
+                                 top = e.clientY - tooltipRect.height - 10;
+                             }
+                             
+                             tooltip.style.left = left + 'px';
+                             tooltip.style.top = top + 'px';
+                         };
 
-                        document.addEventListener('mousemove', updateTooltip);
+                         document.addEventListener('mousemove', updateTooltip);
+                         
+                         // Initial positioning
+                         updateTooltip({ clientX: params.event.center.x, clientY: params.event.center.y });
+                     }
+                 }
+             });
 
-                        // Remove tooltip when mouse leaves node
-                        network.on('blurNode', function () {
-                            document.body.removeChild(tooltip);
-                            document.removeEventListener('mousemove', updateTooltip);
-                        });
-                    }
-                }
-            });
+             // Remove tooltip when mouse leaves node
+             network.on('blurNode', function () {
+                 if (currentTooltip) {
+                     document.body.removeChild(currentTooltip);
+                     currentTooltip = null;
+                 }
+             });
 
             // --- THE MAGIC HAPPENS HERE ---
             // Add a listener for click events on the network
