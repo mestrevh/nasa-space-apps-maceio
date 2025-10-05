@@ -1,33 +1,97 @@
 <!doctype html>
 <html>
 <head>
-    <title>Análise de Documentos com Neo4j</title>
+    <title>Document Analysis with Neo4j</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <style>
-        body { font-family: system-ui, sans-serif; margin: 0; display: flex; height: 100vh; background-color: #f4f4f9; }
-        .sidebar { width: 350px; padding: 20px; background-color: #fff; border-right: 1px solid #ddd; box-shadow: 2px 0 5px rgba(0,0,0,0.1); overflow-y: auto; }
-        .main-content { flex-grow: 1; }
-        #mynetwork { width: 100%; height: 100%; }
-        h1, h2 { color: #333; }
-        form { margin-top: 20px; }
-        input[type="file"] { border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%; }
-        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
-        button:hover { background-color: #0056b3; }
-        #status { margin-top: 15px; padding: 10px; border-radius: 4px; background-color: #e9ecef; color: #495057; }
+        /* Dark Theme Styles */
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #1a1a1a; /* Dark background for the main content area */
+            color: #e0e0e0; /* Light text color for readability */
+        }
+        .sidebar {
+            width: 350px;
+            padding: 20px;
+            background-color: #282828; /* Slightly lighter dark for sidebar */
+            border-right: 1px solid #3a3a3a; /* Darker border */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5); /* More pronounced shadow for depth */
+            overflow-y: auto;
+        }
+        .main-content {
+            flex-grow: 1;
+        }
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a; /* Ensure the network background matches body */
+        }
+        h1, h2 {
+            color: #f0f0f0; /* Lighter color for headings */
+        }
+        p {
+            color: #c0c0c0; /* Slightly desaturated text for paragraphs */
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            border: 1px solid #555; /* Darker border for input */
+            padding: 8px;
+            border-radius: 4px;
+            width: 100%;
+            background-color: #333; /* Dark input background */
+            color: #e0e0e0; /* Light text for input */
+        }
+        button {
+            background-color: #4a90e2; /* A shade of blue for buttons */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #357bd8; /* Darker blue on hover */
+        }
+        #status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #3a3a3a; /* Dark background for status messages */
+            color: #c0c0c0; /* Light text for status messages */
+        }
+
+        /* NEW STYLE: Changes cursor on hover over a node in Vis.js */
+        #mynetwork .vis-network .vis-node:hover {
+            cursor: pointer;
+        }
+        /* Optional: Vis.js specific styles for dark theme if you want to customize nodes/edges */
+        .vis-tooltip {
+            background-color: #333 !important;
+            color: #e0e0e0 !important;
+            border: 1px solid #555 !important;
+        }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h1>Análise de PDF</h1>
-        <p>Envie um documento PDF para extrair entidades e relações, e visualizá-las no grafo.</p>
+        <h1>PDF Analysis</h1>
+        <p>Upload a PDF document to extract entities and relationships, and view them in the graph.</p>
         
         <form id="upload-form">
             <input type="file" id="pdf-input" name="pdf_file" accept=".pdf" required>
-            <button type="submit">Processar PDF</button>
+            <button type="submit">Process PDF</button>
         </form>
 
-        <div id="status">Pronto para receber um arquivo.</div>
+        <div id="status">Ready to receive a file.</div>
     </div>
 
     <div class="main-content">
@@ -39,41 +103,96 @@
     const statusDiv = document.getElementById('status');
     const uploadForm = document.getElementById('upload-form');
     const pdfInput = document.getElementById('pdf-input');
+    
     let network = null;
+    // We need to access the DataSet of nodes, so we declare it here
+    let nodesDataSet = new vis.DataSet([]); 
+    let edgesDataSet = new vis.DataSet([]);
 
-    // 1. Função para desenhar ou atualizar o grafo
-    function desenharGrafo(graphData) {
+    // 1. Function to draw or update the graph
+    function drawGraph(graphData) {
+        // Clear old data and add new
+        nodesDataSet.clear();
+        edgesDataSet.clear();
+        nodesDataSet.add(graphData.nodes);
+        edgesDataSet.add(graphData.edges);
+
         const data = {
-            nodes: new vis.DataSet(graphData.nodes),
-            edges: new vis.DataSet(graphData.edges)
+            nodes: nodesDataSet,
+            edges: edgesDataSet
         };
-        const options = { /* ... opções do Vis.js ... */ };
+
+        const options = {
+            interaction: {
+                hover: true // Enable hover effects, necessary for cursor change
+            },
+            // NEW: Vis.js options for node/edge styling in dark theme
+            nodes: {
+                font: { color: '#e0e0e0' } // Light font for node labels
+            },
+            edges: {
+                color: { inherit: 'from' }, // Edges inherit color from nodes
+                font: { color: '#e0e0e0' } // Light font for edge labels
+            },
+            // If you use groups, define their colors here
+            groups: {
+                PER: { color: '#FF7F50' }, // Coral
+                LOC: { color: '#6495ED' }, // CornflowerBlue
+                ORG: { color: '#90EE90' }, // LightGreen
+                DATE: { color: '#FFD700' }, // Gold
+                MISC: { color: '#D8BFD8' }, // Thistle
+                // Add more groups as needed based on your spaCy labels
+            }
+        };
+
         network = new vis.Network(container, data, options);
+
+        // --- THE MAGIC HAPPENS HERE ---
+        // Add a listener for click events on the network
+        network.on('click', function(params) {
+            // Check if a node was clicked (and not the graph background)
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodesDataSet.get(nodeId); // Get full node data
+
+                if (node && node.label) {
+                    // Create a Google search URL with the node's label
+                    const query = encodeURIComponent(node.label);
+                    const url = `https://www.google.com/search?q=${query}`;
+                    
+                    console.log(`Opening link for node ${nodeId}: ${url}`);
+                    
+                    // Open the link in a new tab
+                    window.open(url, '_blank');
+                }
+            }
+        });
     }
 
-    // 2. Função para buscar os dados do grafo na API e desenhar
-    function atualizarGrafo() {
-        statusDiv.textContent = 'Atualizando visualização do grafo...';
+    // Rest of the JavaScript (updateGraph, uploadForm, etc.) remains the same
+    // 2. Function to fetch graph data from the API and draw
+    function updateGraph() {
+        statusDiv.textContent = 'Updating graph visualization...';
         fetch('/api/data')
             .then(response => response.json())
             .then(data => {
-                desenharGrafo(data);
-                statusDiv.textContent = 'Grafo atualizado.';
+                drawGraph(data);
+                statusDiv.textContent = 'Graph updated.';
             })
             .catch(error => {
-                console.error('Erro ao buscar dados do grafo:', error);
-                statusDiv.textContent = 'Erro ao atualizar o grafo.';
+                console.error('Error fetching graph data:', error);
+                statusDiv.textContent = 'Error updating the graph.';
             });
     }
 
-    // 3. Lógica para o formulário de upload
+    // 3. Logic for the upload form
     uploadForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Impede o envio tradicional do formulário
+        event.preventDefault(); // Prevents the traditional form submission
         
         const formData = new FormData();
         formData.append('pdf_file', pdfInput.files[0]);
 
-        statusDiv.textContent = 'Enviando arquivo...';
+        statusDiv.textContent = 'Uploading file...';
 
         fetch('/upload', {
             method: 'POST',
@@ -84,21 +203,21 @@
             if (result.error) {
                 throw new Error(result.error);
             }
-            console.log('Sucesso:', result);
+            console.log('Success:', result);
             statusDiv.innerHTML = `<b>${result.message}</b><br>
-                                   Entidades: ${result.entidades_encontradas}<br>
-                                   Relações: ${result.relacoes_encontradas}`;
-            // Após o sucesso, atualiza a visualização do grafo
-            atualizarGrafo();
+                                   Entities: ${result.entities_found}<br>
+                                   Relationships: ${result.relationships_found}`;
+            // After success, update the graph visualization
+            updateGraph();
         })
         .catch(error => {
-            console.error('Erro:', error);
-            statusDiv.textContent = `Erro no processamento: ${error.message}`;
+            console.error('Error:', error);
+            statusDiv.textContent = `Processing error: ${error.message}`;
         });
     });
 
-    // 4. Carrega o grafo inicial quando a página abre
-    document.addEventListener('DOMContentLoaded', atualizarGrafo);
+    // 4. Load the initial graph when the page opens
+    document.addEventListener('DOMContentLoaded', updateGraph);
 </script>
 
 </body>
