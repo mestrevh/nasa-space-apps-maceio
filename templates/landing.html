@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data SpaceBio - O futuro da biologia espacial</title>
+    <title>Data SpaceBio - The future of space biology</title>
     <style>
         * {
             margin: 0;
@@ -36,7 +36,7 @@
 
         .clickable-button {
             position: absolute;
-            /* Posicionamento ajustado para alinhar com o botão da imagem */
+            /* Position adjusted to align with the image button */
             left: 5%;
             top: 65%;
             width: 25%;
@@ -53,7 +53,7 @@
             transform: scale(0.98);
         }
 
-        /* Responsividade para diferentes tamanhos de tela */
+        /* Responsiveness for different screen sizes */
         @media (max-width: 768px) {
             .clickable-button {
                 left: -5%;
@@ -72,7 +72,7 @@
             }
         }
 
-        /* Efeito de loading opcional */
+        /* Optional loading effect */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -110,36 +110,36 @@
 <body>
     <div class="landing-container">
         <img src="{{ url_for('static', filename='landingpage.png') }}" 
-             alt="Data SpaceBio - O projeto que dita o futuro da biologia espacial" 
+             alt="Data SpaceBio - The project that dictates the future of space biology" 
              class="landing-image">
         
-        <!-- Botão invisível clicável sobre a região do botão "comece a explorar" -->
+        <!-- Invisible clickable button over the "start exploring" button region -->
         <button class="clickable-button" onclick="redirectToGraph()" 
-                title="Clique para começar a explorar o Data SpaceBio">
+                title="Click to start exploring Data SpaceBio">
         </button>
     </div>
 
-    <!-- Overlay de loading -->
+    <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div>
             <div class="loading-spinner"></div>
-            <div class="loading-text">Carregando Data SpaceBio...</div>
+            <div class="loading-text">Loading Data SpaceBio...</div>
         </div>
     </div>
 
     <script>
         function redirectToGraph() {
-            // Mostrar loading
+            // Show loading
             document.getElementById('loadingOverlay').style.display = 'flex';
             
-            // Redirecionar após um pequeno delay para mostrar o loading
+            // Redirect after a small delay to show loading
             setTimeout(() => {
                 window.location.href = '/graph';
             }, 500);
         }
 
 
-        // Adicionar suporte para teclado (acessibilidade)
+        // Add keyboard support (accessibility)
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
                 redirectToGraph();

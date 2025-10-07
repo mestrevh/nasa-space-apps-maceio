@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revisão Sistemática - Biologia Celular em Microgravidade</title>
+    <title>Systematic Review - Cellular Biology in Microgravity</title>
     <style>
         * {
             margin: 0;
@@ -239,18 +239,18 @@
     </style>
 </head>
 <body>
-    <a href="/graph" class="back-button">← Voltar ao Grafo</a>
+    <a href="/graph" class="back-button">← Back to Graph</a>
     
     <div class="container">
         <div class="header">
-            <h1>Revisão Sistemática</h1>
-            <p class="subtitle">Biologia Celular em Microgravidade</p>
+            <h1>Systematic Review</h1>
+            <p class="subtitle">Cellular Biology in Microgravity</p>
         </div>
 
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-number">3</div>
-                <div class="stat-label">Estudos Analisados</div>
+                <div class="stat-label">Studies Analyzed</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">2021-2025</div>
@@ -258,31 +258,31 @@
             </div>
             <div class="stat-card">
                 <div class="stat-number">ISS</div>
-                <div class="stat-label">Ambiente de Pesquisa</div>
+                <div class="stat-label">Research Environment</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">Multi</div>
-                <div class="stat-label">Tipos Celulares</div>
+                <div class="stat-label">Cell Types</div>
             </div>
         </div>
 
         <div id="studies-container">
-            <!-- Os estudos serão carregados aqui via JavaScript -->
+            <!-- Studies will be loaded here via JavaScript -->
         </div>
     </div>
 
     <script>
-        // Dados da revisão sistemática
+        // Systematic review data
         const systematicReviewData = [
             {
                 "id": 1,
                 "study": "Mashiko, T. et al. (2021)",
-                "objective": "Desenvolver e validar um novo método de cultura em microgravidade para proliferar seletivamente células-tronco adiposas (hASCs) altamente funcionais.",
-                "methodology": "Cultura de células em microesferas de poliestireno e colágeno com agitação controlada para simular microgravidade. Análise de expressão gênica por RT-qPCR e ensaios funcionais (formação de colônias, diferenciação, etc.).",
+                "objective": "Develop and validate a new microgravity culture method to selectively proliferate highly functional adipose-derived stem cells (hASCs).",
+                "methodology": "Cell culture in polystyrene and collagen microspheres with controlled agitation to simulate microgravity. Gene expression analysis by RT-qPCR and functional assays (colony formation, differentiation, etc.).",
                 "organism_cell_type": "Células-Tronco Derivadas de Adiposo Humano (hASCs).",
                 "key_findings": [
-                    "A cultura em microgravidade aumentou a proporção de células-tronco SSEA-3(+) em 4.4 vezes e seu número em 2.7 vezes em comparação com culturas normais.",
-                    "As células cultivadas sob microgravidade expressaram níveis mais altos de marcadores de pluripotência (OCT4, SOX2, NANOG).",
+                    "Microgravity culture increased the proportion of SSEA-3(+) stem cells by 4.4 times and their number by 2.7 times compared to normal cultures.",
+                    "Cells cultured under microgravity expressed higher levels of pluripotency markers (OCT4, SOX2, NANOG).",
                     "As células demonstraram capacidades melhoradas de proliferação, formação de redes e diferenciação mesenquimal múltipla."
                 ],
                 "source_citation": "Mashiko, T.; Kanayama, K.; Saito, N.; Shirado, T.; Asahi, R.; Mori, M.; Yoshimura, K. Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres. Cells 2021, 10, 560."
@@ -290,12 +290,12 @@
             {
                 "id": 2,
                 "study": "López Garzón, N.A. et al. (2025)",
-                "objective": "Realizar uma revisão abrangente dos efeitos da microgravidade em processos biológicos e suas implicações para a saúde humana, abordando o sistema imune, câncer, regeneração tecidual e sistemas de órgãos.",
-                "methodology": "Revisão sistemática da literatura utilizando as bases de dados PubMed, Scopus e Embase. A análise incluiu estudos observacionais, in vitro e experimentais.",
+                "objective": "Conduct a comprehensive review of the effects of microgravity on biological processes and their implications for human health, addressing the immune system, cancer, tissue regeneration, and organ systems.",
+                "methodology": "Systematic literature review using PubMed, Scopus, and Embase databases. The analysis included observational, in vitro, and experimental studies.",
                 "organism_cell_type": "Vários, incluindo: Células do sistema imune (Linfócitos T, macrófagos), células-tronco, células cancerígenas, células endoteliais, ósseas, renais e cardiomiócitos.",
                 "key_findings": [
-                    "A microgravidade afeta o sistema imune, prejudicando a ativação de linfócitos T e a produção de citocinas.",
-                    "Em biologia do câncer, promove a formação de esferoides que mimetizam tumores in vivo.",
+                    "Microgravity affects the immune system, impairing T lymphocyte activation and cytokine production.",
+                    "In cancer biology, it promotes the formation of spheroids that mimic in vivo tumors.",
                     "Em cardiomiócitos, melhora a maturação, a biogênese mitocondrial e o manuseio de cálcio.",
                     "Induz perda óssea acelerada, altera o metabolismo hepático e a função endotelial."
                 ],
@@ -304,20 +304,20 @@
             {
                 "id": 3,
                 "study": "Parra, M. et al. (2017)",
-                "objective": "Validar em microgravidade um novo sistema, chamado WetLab-2, para isolamento de RNA e análise de expressão gênica por RT-qPCR multiplex a bordo da Estação Espacial Internacional (ISS).",
-                "methodology": "Realização de experimentos a bordo da ISS utilizando o sistema WetLab-2, que inclui um Módulo de Preparação de Amostras de RNA (SPM) e um termociclador de PCR em tempo real. A validação foi feita com padrões de DNA e RNA extraído de amostras congeladas de E. coli e tecido hepático de camundongo.",
+                "objective": "Validate in microgravity a new system, called WetLab-2, for RNA isolation and multiplex gene expression analysis by RT-qPCR aboard the International Space Station (ISS).",
+                "methodology": "Conducting experiments aboard the ISS using the WetLab-2 system, which includes an RNA Sample Preparation Module (SPM) and a real-time PCR thermocycler. Validation was performed with DNA standards and RNA extracted from frozen samples of E. coli and mouse liver tissue.",
                 "organism_cell_type": "Escherichia coli (bactéria) e Camundongo (Mus musculus) (tecido do fígado).",
                 "key_findings": [
-                    "O sistema WetLab-2 realizou com sucesso a extração de RNA e a análise por RT-qPCR no ambiente de microgravidade da ISS, com resultados comparáveis aos controles em terra.",
+                    "The WetLab-2 system successfully performed RNA extraction and RT-qPCR analysis in the microgravity environment of the ISS, with results comparable to ground controls.",
                     "Foi identificado um problema técnico de formação de bolhas de gás durante os ciclos térmicos, que interfere na detecção de fluorescência.",
-                    "O problema das bolhas foi mitigado com sucesso em um experimento de acompanhamento em órbita, usando tampas padrão para pressurizar os tubos de PCR.",
-                    "O sistema foi validado e agora representa uma nova capacidade operacional para pesquisa em biologia molecular na ISS."
+                    "The bubble problem was successfully mitigated in a follow-up orbital experiment, using standard caps to pressurize PCR tubes.",
+                    "The system was validated and now represents a new operational capability for molecular biology research on the ISS."
                 ],
                 "source_citation": "Parra M, Jung J, Boone TD, Tran L, Blaber EA, Brown M, et al. (2017) Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station. PLOS ONE 12(9): e0183480."
             }
         ];
 
-        // Função para renderizar os estudos
+        // Function to render the studies
         function renderStudies() {
             const container = document.getElementById('studies-container');
             
@@ -327,12 +327,12 @@
                 
                 studyCard.innerHTML = `
                     <div class="study-header">
-                        <div class="study-id">Estudo ${study.id}</div>
+                        <div class="study-id">Study ${study.id}</div>
                         <div class="study-title">${study.study}</div>
                     </div>
                     <div class="study-content">
                         <div class="section">
-                            <div class="section-title">Objetivo</div>
+                            <div class="section-title">Objective</div>
                             <div class="section-content">${study.objective}</div>
                         </div>
                         
@@ -342,7 +342,7 @@
                         </div>
                         
                         <div class="section">
-                            <div class="section-title">Organismo/Tipo Celular</div>
+                            <div class="section-title">Organism/Cell Type</div>
                             <div class="section-content">${study.organism_cell_type}</div>
                         </div>
                         
@@ -364,7 +364,7 @@
             });
         }
 
-        // Carregar os estudos quando a página for carregada
+        // Load studies when the page is loaded
         document.addEventListener('DOMContentLoaded', renderStudies);
     </script>
 </body>

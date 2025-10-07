@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -16,23 +16,23 @@
             background-color: #1a1a1a;
             color: #e0e0e0;
             overflow: hidden;
-            /* Evita barras de rolagem no corpo da página */
+            /* Prevents scroll bars on the page body */
         }
 
-        /* O container principal que vai alinhar a sidebar e o conteúdo */
+        /* Main container that will align the sidebar and content */
         .container {
             display: flex;
-            /* A MÁGICA ACONTECE AQUI! */
+            /* THE MAGIC HAPPENS HERE! */
             height: 100vh;
-            /* Ocupa a altura total da tela */
+            /* Takes up the full screen height */
             width: 100vw;
-            /* Ocupa a largura total da tela */
+            /* Takes up the full screen width */
         }
 
         .sidebar {
             width: 350px;
             flex-shrink: 0;
-            /* Impede que a sidebar encolha */
+            /* Prevents the sidebar from shrinking */
             padding: 20px;
             background-color: #282828;
             border-right: 1px solid #3a3a3a;
@@ -43,10 +43,10 @@
 
         .main-content {
             flex-grow: 1;
-            /* Faz o conteúdo principal ocupar o espaço restante */
+            /* Makes the main content take up the remaining space */
             height: 100%;
             position: relative;
-            /* Necessário para #mynetwork */
+            /* Required for #mynetwork */
         }
 
         #mynetwork {
@@ -64,7 +64,7 @@
             color: #c0c0c0;
         }
 
-        /* Estilos da lista de nós (sem alterações) */
+        /* Node list styles (no changes) */
         .node-item {
             background: #2a2a2a;
             border: 1px solid #444;
@@ -174,18 +174,18 @@
             <div style="margin-bottom: 20px;">
                 <a href="index.html"
                     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 15px; text-decoration: none; border-radius: 20px; font-weight: 600; font-size: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; display: inline-block;">
-                    ← Voltar ao Início
+                    ← Back to Home
                 </a>
             </div>
 
             <h1>Data SpaceBio</h1>
-            <p><strong>Dica:</strong> Clique em qualquer nó para ver a revisão sistemática!</p>
+            <p><strong>Tip:</strong> Click on any node to see the systematic review!</p>
 
             <div id="nodes-list" style="margin-top: 20px;">
-                <h3 style="color: #e0e0e0; margin-bottom: 10px;">Lista de Nós</h3>
+                <h3 style="color: #e0e0e0; margin-bottom: 10px;">Node List</h3>
                 <div id="nodes-container"
                     style="max-height: 400px; overflow-y: auto; border: 1px solid #444; border-radius: 5px; padding: 10px;">
-                    <p style="color: #888; font-style: italic;">Carregando nós...</p>
+                    <p style="color: #888; font-style: italic;">Loading nodes...</p>
                 </div>
             </div>
         </div>
@@ -257,18 +257,18 @@
                  }
 
                  // Add visual properties based on article group with more spacing
-                 if (node.articleGroup === 'Células-Tronco Adiposas') {
-                     // Células-Tronco Adiposas nodes on the left side with more spacing
+                 if (node.articleGroup === 'Adipose Stem Cells') {
+                     // Adipose Stem Cells nodes on the left side with more spacing
                      processedNode.x = -500 + (index % 3) * 150;
                      processedNode.y = -300 + Math.floor(index / 3) * 200;
                      processedNode.fixed = { x: false, y: false };
-                 } else if (node.articleGroup === 'Isolamento de RNA na ISS') {
-                     // Isolamento de RNA na ISS nodes on the right side with more spacing
+                 } else if (node.articleGroup === 'RNA Isolation on ISS') {
+                     // RNA Isolation on ISS nodes on the right side with more spacing
                      processedNode.x = 500 + (index % 3) * 150;
                      processedNode.y = -300 + Math.floor(index / 3) * 200;
                      processedNode.fixed = { x: false, y: false };
                  } else {
-                     // Conceitos Compartilhados nodes in the middle with more spacing
+                     // Shared Concepts nodes in the middle with more spacing
                      processedNode.x = (index % 2) * 100 - 50;
                      processedNode.y = -150 + Math.floor(index / 2) * 150;
                      processedNode.fixed = { x: false, y: false };
@@ -369,8 +369,8 @@
                 },
                 // Define colors for different node types
                 groups: {
-                     // Células-Tronco Adiposas group (left side) - Blue tones
-                     "Células-Tronco Adiposas": {
+                     // Adipose Stem Cells group (left side) - Blue tones
+                     "Adipose Stem Cells": {
                          color: {
                              background: '#4A90E2',
                              border: '#357ABD',
@@ -379,8 +379,8 @@
                          font: { color: '#ffffff', size: 8, strokeWidth: 1, strokeColor: '#000000', align: 'center' },
                          size: 22
                      },
-                     // Isolamento de RNA na ISS group (right side) - Green tones  
-                     "Isolamento de RNA na ISS": {
+                     // RNA Isolation on ISS group (right side) - Green tones  
+                     "RNA Isolation on ISS": {
                          color: {
                              background: '#7ED321',
                              border: '#5BA817',
@@ -389,8 +389,8 @@
                          font: { color: '#ffffff', size: 8, strokeWidth: 1, strokeColor: '#000000', align: 'center' },
                          size: 22
                      },
-                     // Conceitos Compartilhados (middle) - Orange tones
-                     "Conceitos Compartilhados": {
+                     // Shared Concepts (middle) - Orange tones
+                     "Shared Concepts": {
                          color: {
                              background: '#F5A623',
                              border: '#D18A1F',
@@ -585,12 +585,12 @@
                          currentTooltip = tooltip;
 
                          // Get full text (use fullLabel if available, otherwise use original label)
-                         const fullText = node.fullLabel || node.label || 'Nó sem descrição';
+                         const fullText = node.fullLabel || node.label || 'Node without description';
                          
                          // Create tooltip content
-                         let tooltipContent = `<div style="font-weight: bold; margin-bottom: 8px; color: #4A90E2;">${node.group || 'Nó'}</div>`;
+                         let tooltipContent = `<div style="font-weight: bold; margin-bottom: 8px; color: #4A90E2;">${node.group || 'Node'}</div>`;
                          tooltipContent += `<div style="margin-bottom: 8px;">${fullText}</div>`;
-                         tooltipContent += `<div style="font-size: 10px; color: #888; border-top: 1px solid #555; padding-top: 6px; margin-top: 6px;">Clique para ver a revisão sistemática!</div>`;
+                         tooltipContent += `<div style="font-size: 10px; color: #888; border-top: 1px solid #555; padding-top: 6px; margin-top: 6px;">Click to see the systematic review!</div>`;
 
                          tooltip.innerHTML = tooltipContent;
                          tooltip.style.position = 'absolute';
@@ -797,15 +797,15 @@
                         "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:0",
                         "label": "Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres",
                         "fullLabel": "Selective Proliferation of Highly Functional Adipose-Derived Stem Cells in Microgravity Culture with Stirred Microspheres",
-                        "group": "Células-Tronco Adiposas",
-                        "articleGroup": "Células-Tronco Adiposas"
+                        "group": "Adipose Stem Cells",
+                        "articleGroup": "Adipose Stem Cells"
                     },
                     {
                         "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:1",
                         "label": "Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station",
                         "fullLabel": "Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station",
-                        "group": "Isolamento de RNA na ISS",
-                        "articleGroup": "Isolamento de RNA na ISS"
+                        "group": "RNA Isolation on ISS",
+                        "articleGroup": "RNA Isolation on ISS"
                     },
                     {
                         "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:2",
@@ -917,7 +917,7 @@
                         "label": "microgravity",
                         "fullLabel": "microgravity",
                         "group": "Keyword",
-                        "articleGroup": "Conceitos Compartilhados"
+                        "articleGroup": "Shared Concepts"
                     },
                     {
                         "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:18",
@@ -1015,7 +1015,7 @@
                         "label": "RT-qPCR",
                         "fullLabel": "Reverse Transcription Quantitative Polymerase Chain Reaction",
                         "group": "Method",
-                        "articleGroup": "Conceitos Compartilhados"
+                        "articleGroup": "Shared Concepts"
                     },
                     {
                         "id": "4:a337c634-962d-4ed6-916b-a60120f1f2d9:32",

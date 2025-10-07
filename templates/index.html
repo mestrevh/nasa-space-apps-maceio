@@ -55,7 +55,7 @@
             color: #c0c0c0; /* Slightly desaturated text for paragraphs */
         }
 
-        /* Estilos para a lista de nós */
+        /* Styles for the node list */
         .node-item {
             background: #2a2a2a;
             border: 1px solid #444;
@@ -90,7 +90,7 @@
             word-break: break-word;
         }
 
-        /* Estilos para o container da lista de nós */
+        /* Styles for the node list container */
         #nodes-container {
             scrollbar-width: thin;
             scrollbar-color: #444 #282828;
@@ -130,18 +130,18 @@
     <div class="sidebar">
         <div style="margin-bottom: 20px;">
             <a href="/" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 15px; text-decoration: none; border-radius: 20px; font-weight: 600; font-size: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); transition: all 0.3s ease; display: inline-block;">
-                ← Voltar ao Início
+                ← Back to Home
             </a>
         </div>
         
         <h1>Data SpaceBio</h1>
-        <p><strong>Dica:</strong> Clique em qualquer nó para ver a revisão sistemática!</p>
+        <p><strong>Tip:</strong> Click on any node to see the systematic review!</p>
         
-        <!-- Lista de nós -->
+        <!-- Node list -->
         <div id="nodes-list" style="margin-top: 20px;">
-            <h3 style="color: #e0e0e0; margin-bottom: 10px;">Lista de Nós</h3>
+            <h3 style="color: #e0e0e0; margin-bottom: 10px;">Node List</h3>
             <div id="nodes-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #444; border-radius: 5px; padding: 10px;">
-                <p style="color: #888; font-style: italic;">Carregando nós...</p>
+                <p style="color: #888; font-style: italic;">Loading nodes...</p>
             </div>
         </div>
     </div>
@@ -171,18 +171,18 @@
             }
             
             // Add visual properties based on article group with more spacing
-            if (node.articleGroup === 'Células-Tronco Adiposas') {
-                // Células-Tronco Adiposas nodes on the left side with more spacing
+            if (node.articleGroup === 'Adipose Stem Cells') {
+                // Adipose Stem Cells nodes on the left side with more spacing
                 processedNode.x = -500 + (index % 3) * 150;
                 processedNode.y = -300 + Math.floor(index / 3) * 200;
                 processedNode.fixed = { x: false, y: false };
-            } else if (node.articleGroup === 'Isolamento de RNA na ISS') {
-                // Isolamento de RNA na ISS nodes on the right side with more spacing
+            } else if (node.articleGroup === 'RNA Isolation on ISS') {
+                // RNA Isolation on ISS nodes on the right side with more spacing
                 processedNode.x = 500 + (index % 3) * 150;
                 processedNode.y = -300 + Math.floor(index / 3) * 200;
                 processedNode.fixed = { x: false, y: false };
             } else {
-                // Conceitos Compartilhados nodes in the middle with more spacing
+                // Shared Concepts nodes in the middle with more spacing
                 processedNode.x = (index % 2) * 100 - 50;
                 processedNode.y = -150 + Math.floor(index / 2) * 150;
                 processedNode.fixed = { x: false, y: false };
@@ -282,8 +282,8 @@
             },
             // Define colors for different node types
             groups: {
-                // Células-Tronco Adiposas group (left side) - Blue tones
-                "Células-Tronco Adiposas": {
+                // Adipose Stem Cells group (left side) - Blue tones
+                "Adipose Stem Cells": {
                     color: { 
                         background: '#4A90E2',
                         border: '#357ABD',
@@ -292,8 +292,8 @@
                     font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
                     size: 35
                 },
-                // Isolamento de RNA na ISS group (right side) - Green tones  
-                "Isolamento de RNA na ISS": {
+                // RNA Isolation on ISS group (right side) - Green tones  
+                "RNA Isolation on ISS": {
                     color: { 
                         background: '#7ED321',
                         border: '#5BA817',
@@ -302,8 +302,8 @@
                     font: { color: '#ffffff', size: 14, strokeWidth: 3, strokeColor: '#000000' },
                     size: 35
                 },
-                // Conceitos Compartilhados (middle) - Orange tones
-                "Conceitos Compartilhados": {
+                // Shared Concepts (middle) - Orange tones
+                "Shared Concepts": {
                     color: { 
                         background: '#F5A623',
                         border: '#D18A1F',
@@ -490,7 +490,7 @@
                     
                     // Add click instruction for all nodes
                     let tooltipContent = node.fullLabel;
-                    tooltipContent += '<br><br><strong style="color: #4A90E2;">📚 Clique para ver a revisão sistemática!</strong>';
+                    tooltipContent += '<br><br><strong style="color: #4A90E2;">📚 Click to see the systematic review!</strong>';
                     
                     tooltip.innerHTML = tooltipContent;
                     tooltip.style.position = 'absolute';

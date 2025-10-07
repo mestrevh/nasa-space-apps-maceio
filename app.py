@@ -265,14 +265,14 @@ def get_full_node_label(node):
 def get_article_group(node):
     """Determine which article group a node belongs to based on its properties."""
     # Check if this is a Paper node
-    if "paper_id" in node:
+    if "paper_id" in node: 
         paper_id = node["paper_id"]
         if "10.3390/cells10030560" in paper_id:
-            return "Células-Tronco Adiposas"
+            return "Adipose Stem Cells"
         elif "10.1371/journal.pone.0183480" in paper_id:
-            return "Isolamento de RNA na ISS"
+            return "RNA Isolation on ISS"
         else:
-            return "Artigo Desconhecido"
+            return "Unknown Article"
     
     # For other nodes, we need to check their relationships to papers
     # This is a simplified approach - in a real scenario, you'd query the relationships
@@ -287,12 +287,12 @@ def get_article_group(node):
         article2_keywords = ["rna", "isolation", "pcr", "quantitative", "real", "time", "iss", "space", "station"]
         
         if any(keyword in name for keyword in article1_keywords):
-            return "Células-Tronco Adiposas"
+            return "Adipose Stem Cells"
         elif any(keyword in name for keyword in article2_keywords):
-            return "Isolamento de RNA na ISS"
+            return "RNA Isolation on ISS"
     
     # Default to shared/unknown for nodes that could belong to both articles
-    return "Conceitos Compartilhados"
+    return "Shared Concepts"
 
 
 # --- WEB APPLICATION ROUTES (Endpoints) ---
